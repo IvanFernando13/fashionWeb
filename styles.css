@@ -23,13 +23,30 @@ body {
     z-index: 1000;
 }
 
+/* Header underline to match footer width */
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 60px;
+    right: 60px;
+    height: 1px;
+    background-color: #333;
+}
+
+/* Home page: no header underline */
+.home-page .header::after {
+    content: none;
+}
+
 .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 80px;
+    padding: 0 60px;
 }
 
 .logo {
@@ -76,9 +93,30 @@ body {
     opacity: 0.7;
 }
 
+.right-actions {
+    display: flex;
+    align-items: center;
+    gap: 160px;           /* Bag ↔ Account spacing */
+    margin-left: auto;   /* push group to the right */
+    padding-left: 60px;  /* Games ↔ Bag spacing */
+}
+
 .utility-links {
     display: flex;
-    gap: 50px;
+    gap: 0;
+}
+
+/* Make Bag visually consistent with nav links */
+.bag-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    transition: opacity 0.3s ease;
+}
+
+.bag-link:hover {
+    opacity: 0.7;
 }
 
 .utility-links a {
@@ -358,8 +396,8 @@ a:focus {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 150px;
-    right: 150px;
+    left: 60px;
+    right: 60px;
     height: 1px;
     background-color: #000000;
 }
@@ -519,6 +557,9 @@ a:focus {
     border: 1px solid #ccc;
     overflow: hidden;
     transition: transform 0.3s ease;
+    display: flex;            /* make all cards equal height */
+    flex-direction: column;   /* stack image and info */
+    height: 100%;             /* stretch to grid cell */
 }
 
 .product-item:hover {
@@ -527,11 +568,10 @@ a:focus {
 
 .product-image {
     width: 100%;
-    height: auto;
     display: block;
     background-color: #90EE90;
-    min-height: 300px;
-    object-fit: cover;
+    aspect-ratio: 1 / 1;      /* uniform square thumbnails */
+    object-fit: cover;        /* crop to fill */
 }
 
 .product-info {
@@ -539,6 +579,7 @@ a:focus {
     background-color: #ffffff;
     opacity: 1;
     transition: opacity 0.3s ease;
+    min-height: 90px;         /* keep footer heights consistent */
 }
 
 .product-name {
@@ -546,6 +587,12 @@ a:focus {
     font-weight: 400;
     margin-bottom: 8px;
     color: #000000;
+    display: -webkit-box;     /* clamp to two lines */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+    min-height: calc(1.4em * 2);
 }
 
 .product-price {
@@ -694,8 +741,389 @@ a:focus {
     color: #666666;
 }
 
+/* Inspiration Page Styling */
+.inspiration-page {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.inspiration-page .header {
+    background: none;
+    position: relative;
+}
+
+.inspiration-page .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 60px;
+    right: 60px;
+    height: 1px;
+    background-color: #000000;
+}
+
+.inspiration-page .logo-text {
+    color: #000000;
+}
+
+.inspiration-page .logo-link {
+    color: #000000;
+}
+
+.inspiration-page .navigation a {
+    color: #000000;
+}
+
+.inspiration-page .utility-links a {
+    color: #000000;
+}
+
+.inspiration-page .footer {
+    background-color: #ffffff;
+}
+
+.inspiration-page .footer::before {
+    background-color: #000000;
+}
+
+.inspiration-page .footer-column h3 {
+    color: #000000;
+}
+
+.inspiration-page .footer-column li {
+    color: #666666;
+}
+
+.inspiration-page .footer-column li a {
+    color: #666666;
+}
+
+.inspiration-page .footer-column li a:hover {
+    color: #000000;
+}
+
+/* Inspiration Page Grid */
+.inspiration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 120px 40px;
+    min-height: calc(100vh - 200px);
+}
+
+.inspiration-item {
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 2/3; /* More portrait shape - taller and narrower */
+    min-height: 550px;
+    background-color: #f5f5f5;
+}
+
+.inspiration-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Default: show main, hide hover */
+.inspiration-item .main-image {
+    opacity: 1;
+    z-index: 1;
+    filter: grayscale(100%);
+}
+
+.inspiration-item .hover-image {
+    opacity: 0;
+    z-index: 2;
+    filter: none;
+}
+
+/* On hover: fade main out, fade hover in */
+.inspiration-item:hover .main-image {
+    opacity: 0;
+}
+
+.inspiration-item:hover .hover-image {
+    opacity: 1;
+}
+
+.inspiration-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Inspiration Text Overlay */
+.inspiration-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+    pointer-events: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Show inspiration text on hover */
+.inspiration-item:hover .inspiration-text {
+    opacity: 1;
+}
+
+/* Inspiration overlay effect */
+.inspiration-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.inspiration-item:hover::before {
+    opacity: 1;
+}
+
+/* Inspiration Page: disable grayscale/color swap and text overlay */
+.inspiration-item .main-image {
+    filter: none; /* keep original colors */
+    opacity: 1;
+}
+
+.inspiration-item .hover-image {
+    display: none !important; /* no secondary image */
+    opacity: 0;
+}
+
+.inspiration-item:hover .main-image {
+    opacity: 1; /* do not fade out on hover */
+}
+
+.inspiration-item:hover .hover-image {
+    opacity: 0; /* ensure hidden even on hover */
+}
+
+.inspiration-text {
+    display: none; /* no text overlay on inspiration grid */
+}
+
+/* Inspiration Look Detail Page Styles */
+.look-detail-page {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.look-detail-page .header {
+    background: none;
+    position: relative;
+}
+
+.look-detail-page .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 60px;
+    right: 60px;
+    height: 1px;
+    background-color: #000000;
+}
+
+.look-detail-page .logo-text {
+    color: #000000;
+}
+
+.look-detail-page .logo-link {
+    color: #000000;
+}
+
+.look-detail-page .navigation a {
+    color: #000000;
+}
+
+.look-detail-page .utility-links a {
+    color: #000000;
+}
+
+.look-detail-page .footer {
+    background-color: #ffffff;
+}
+
+.look-detail-page .footer::before {
+    background-color: #000000;
+}
+
+.look-detail-page .footer-column h3 {
+    color: #000000;
+}
+
+.look-detail-page .footer-column li {
+    color: #666666;
+}
+
+.look-detail-page .footer-column li a {
+    color: #666666;
+}
+
+.look-detail-page .footer-column li a:hover {
+    color: #000000;
+}
+
+.look-detail {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 60px 80px;
+    background-color: #ffffff;
+}
+
+.look-detail .back-link {
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 0;
+    color: #000000;
+    text-decoration: none;
+    font-size: 16px;
+    transition: opacity 0.3s ease;
+}
+
+.look-detail .back-link:hover {
+    opacity: 0.7;
+}
+
+.look-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    margin: 0 0 30px 0;
+}
+
+.look-detail-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 0;
+}
+
+.look-image-container {
+    width: 100%;
+    overflow: visible;
+    background-color: #f5f5f5;
+    /* Let the container size to the image height to avoid excess empty space */
+    min-height: 0;
+}
+
+.look-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.look-products-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+}
+
+.look-products-list {
+    /* Use CSS Grid so rows adapt to each product's natural height */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+}
+
+.look-product {
+    display: flex;
+    gap: 0;
+    background-color: #ffffff;
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 100%;
+    align-items: stretch;
+}
+
+.look-product:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.look-product a {
+    display: flex;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    align-items: stretch;
+}
+
+.look-product-thumb {
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    min-width: 120px;
+    object-fit: cover;
+    display: block;
+    background-color: #f5f5f5;
+    flex-shrink: 0;
+}
+
+.look-product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    gap: 8px;
+    background-color: #d9d9d9;
+    flex: 1;
+}
+
+.look-product-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.look-product-brand {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+    margin: 0;
+}
+
 /* Responsive Design for Brands Page */
 @media (max-width: 768px) {
+    .inspiration-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        padding: 100px 40px;
+    }
+    
+    .inspiration-item {
+        aspect-ratio: 2/3;
+        min-height: 450px;
+    }
+    
     .brands-grid {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(5, 1fr);
@@ -739,9 +1167,58 @@ a:focus {
     .wishlist-btn {
         width: 100%;
     }
+    
+    .look-detail {
+        padding: 100px 40px 60px;
+    }
+    
+    .look-detail-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .look-image-container {
+        min-height: 500px;
+    }
+    
+    .look-products-section h2 {
+        font-size: 28px;
+    }
+    
+    .look-product-thumb {
+        max-width: 150px;
+        min-width: 100px;
+    }
+}
+
+/* Brand list page: reduce bottom padding so footer sits closer when few items */
+.brand-list-page .product-page {
+    padding-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .brand-list-page .product-page {
+        padding-bottom: 24px;
+    }
+}
+
+/* Brand list page: slightly tighter footer spacing */
+.brand-list-page .footer {
+    padding: 80px 0; /* reduce from 100px */
 }
 
 @media (max-width: 480px) {
+    .inspiration-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(12, 1fr);
+        padding: 80px 20px;
+    }
+    
+    .inspiration-item {
+        aspect-ratio: 2/3;
+        min-height: 400px;
+    }
+    
     .brands-grid {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(9, 1fr);
@@ -782,5 +1259,34 @@ a:focus {
     
     .product-detail-description {
         font-size: 14px;
+    }
+    
+    .look-detail {
+        padding: 100px 20px 40px;
+    }
+    
+    .look-image-container {
+        min-height: 400px;
+    }
+    
+    .look-products-section h2 {
+        font-size: 24px;
+    }
+    
+    .look-product-thumb {
+        max-width: 120px;
+        min-width: 80px;
+    }
+    
+    .look-product-info {
+        padding: 15px;
+    }
+    
+    .look-product-name {
+        font-size: 16px;
+    }
+    
+    .look-product-brand {
+        font-size: 12px;
     }
 }

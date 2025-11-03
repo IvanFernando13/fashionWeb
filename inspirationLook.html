@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Look Details - FS Fashion Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="look-detail-page">
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link"><span class="logo-text">FS</span></a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <li><a href="categoryPage.html">Category</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="#search">Search</a></li>
+                    <li><a href="#games">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <a href="#bag" class="bag-link">Bag</a>
+                <div class="utility-links">
+                    <a href="#account">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="look-detail">
+        <a href="javascript:history.back()" class="back-link">← Back to Inspiration</a>
+        <h2 class="look-title">What They Are Wearing</h2>
+        <div class="look-detail-container">
+            <div class="look-image-container">
+                <img id="lookImage" src="" alt="Inspiration Look" class="look-image">
+            </div>
+            <div class="look-products-section">
+                <div id="lookProducts" class="look-products-list">
+                    <!-- Products will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li>Rick Owens</li>
+                    <li>Maison Margiela</li>
+                    <li>Balenciaga</li>
+                    <li>Vivienne Westwood</li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="inspirationLooks.js"></script>
+    <script>
+    // Wait for scripts to load
+    function initPage() {
+        // Get look id from URL
+        const params = new URLSearchParams(window.location.search);
+        const lookId = params.get('id');
+        const lookData = window.INSPIRATION_LOOKS ? window.INSPIRATION_LOOKS.find(l => String(l.id) === lookId) : null;
+
+        function notFound() {
+            const imgEl = document.getElementById('lookImage');
+            if (imgEl) imgEl.src = '';
+            const captionEl = document.getElementById('lookCaption');
+            if (captionEl) captionEl.innerText = 'Look not found.';
+            const productsEl = document.getElementById('lookProducts');
+            if (productsEl) productsEl.innerHTML = '';
+            document.title = 'Look Not Found - FS Fashion Marketplace';
+        }
+
+        function loadLook() {
+            if (!lookData) {
+                notFound();
+                return;
+            }
+            
+            // Load image
+            const imgEl = document.getElementById('lookImage');
+            if (imgEl) {
+                imgEl.src = lookData.image;
+                imgEl.onload = function() {
+                    // Image loaded
+                };
+            }
+            
+            const captionEl = document.getElementById('lookCaption');
+            if (captionEl) captionEl.textContent = lookData.caption || '';
+            document.title = (lookData.caption ? lookData.caption + ' - ' : '') + 'Look Details - FS Fashion Marketplace';
+            
+            // Render worn products
+            const prods = (window.PRODUCTS || []);
+            console.log('Available products:', prods.length);
+            console.log('Looking for product IDs:', lookData.products);
+            
+            if (!prods || prods.length === 0) {
+                console.error('PRODUCTS ARRAY IS EMPTY!');
+                const productsContainer = document.getElementById('lookProducts');
+                if (productsContainer) {
+                    productsContainer.innerHTML = '<div class="look-product"><div class="look-product-info" style="padding: 40px; text-align: center; color: #fff;"><em>Products not loaded. Check console.</em></div></div>';
+                }
+                return;
+            }
+            
+            const html = (lookData.products || []).map(pid => {
+                // Convert both to strings for comparison
+                const pidStr = String(pid);
+                const p = prods.find(p => String(p.id) === pidStr);
+                if (!p) {
+                    console.warn('Product not found for ID:', pid, 'Type:', typeof pid, 'Available IDs (first 5):', prods.slice(0, 5).map(p => p.id + ' (type: ' + typeof p.id + ')'));
+                    return '';
+                }
+                console.log('Found product:', p.name, 'for ID:', pid);
+                return `
+                    <div class="look-product">
+                        <a href="productPage.html?id=${p.id}">
+                            <img src="${p.image || 'image/mainImage.jpeg'}" alt="${p.name}" class="look-product-thumb">
+                            <div class="look-product-info">
+                                <div class="look-product-name">${p.name}</div>
+                                <div class="look-product-brand">${p.brand}</div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+            }).filter(html => html !== '').join('');
+            
+            const productsContainer = document.getElementById('lookProducts');
+            if (productsContainer) {
+                if (html && html.trim() !== '') {
+                    productsContainer.innerHTML = html;
+                    console.log('Products rendered:', productsContainer.children.length);
+                } else {
+                    productsContainer.innerHTML = '<div class="look-product"><div class="look-product-info" style="padding: 40px; text-align: center; color: #fff;"><em>No products found for this look.</em></div></div>';
+                    console.warn('No products HTML generated');
+                }
+            } else {
+                console.error('Products container not found!');
+            }
+        }
+        
+        loadLook();
+    }
+    
+    // Ensure scripts are loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPage);
+    } else {
+        // DOM already loaded
+        setTimeout(initPage, 100); // Small delay to ensure scripts are parsed
+    }
+    </script>
+</body>
+</html>

@@ -6,6 +6,39 @@
     <title>Product - FS Fashion Marketplace</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    /* Scoped slider styles for product detail page */
+    .slider { position: relative; }
+    .slider-viewport { overflow: hidden; width: 100%; }
+    .slides { display: flex; }
+    .product-detail-image { width: 100%; height: auto; display: block; object-fit: contain; }
+    .slider-btn { 
+        position: absolute; 
+        top: 50%; 
+        transform: translateY(-50%); 
+        background: rgba(0,0,0,0.45);
+        color: #fff; 
+        border: none; 
+        width: 48px; 
+        height: 48px; 
+        border-radius: 9999px; 
+        font-size: 26px; 
+        line-height: 48px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        cursor: pointer; 
+        transition: background 150ms ease;
+    }
+    .slider-btn:hover { background: rgba(0,0,0,0.6); }
+    #sliderPrev { left: 10px; }
+    #sliderNext { right: 10px; }
+    @media (min-width: 768px) {
+        .slider-btn { width: 56px; height: 56px; font-size: 30px; line-height: 56px; }
+        #sliderPrev { left: 14px; }
+        #sliderNext { right: 14px; }
+    }
+    </style>
 </head>
 <body class="brands-page">
     <!-- Header -->
@@ -21,12 +54,15 @@
                     <li><a href="categoryPage.html">Shop</a></li>
                     <li><a href="brandsPage.html">Brands</a></li>
                     <li><a href="#search">Search</a></li>
-                    <li><a href="#inspiration">Inspiration</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
                     <li><a href="#games">Games</a></li>
                 </ul>
             </nav>
-            <div class="utility-links">
-                <a href="#account">Account</a>
+            <div class="right-actions">
+                <a href="#bag" class="bag-link">Bag</a>
+                <div class="utility-links">
+                    <a href="#account">Account</a>
+                </div>
             </div>
         </div>
     </header>
@@ -37,7 +73,13 @@
         
         <div class="product-detail-container">
             <div class="product-image-container">
-                <img id="productImage" src="image/mainImage.jpeg" alt="Product" class="product-detail-image">
+                <div class="slider" id="imageSlider">
+                    <div class="slider-viewport">
+                        <div class="slides" id="sliderSlides"></div>
+                    </div>
+                    <button class="slider-btn prev" id="sliderPrev" aria-label="Previous image">‹</button>
+                    <button class="slider-btn next" id="sliderNext" aria-label="Next image">›</button>
+                </div>
             </div>
             
             <div class="product-info-container">
@@ -86,55 +128,115 @@
             <div class="footer-column">
                 <h3>Category</h3>
                 <ul>
-                    <li><a href="topPage.html">Tops</a></li>
-                    <li><a href="outerwearPage.html">Outerwear</a></li>
-                    <li><a href="bottomsPage.html">Bottoms</a></li>
-                    <li><a href="accessoriesPage.html">Accessories</a></li>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
                 </ul>
             </div>
         </div>
     </footer>
 
+    <script src="products.js"></script>
     <script>
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        // Function to get parameter or return default
-        function getParam(param, defaultValue) {
-            return urlParams.get(param) || defaultValue;
+        // Load product by ID from products.js
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+
+        function renderNotFound() {
+            document.getElementById('productName').textContent = 'Product Not Found';
+            document.getElementById('productPrice').textContent = '';
+            document.getElementById('productDescription').textContent = 'The requested product could not be found.';
+            document.getElementById('productBrand').textContent = '-';
+            document.getElementById('productMaterial').textContent = '-';
+            document.getElementById('productSize').textContent = '-';
+            document.getElementById('productImage').src = 'image/mainImage.jpeg';
+            document.title = 'Product Not Found - FS Fashion Marketplace';
+            document.querySelector('.add-to-cart-btn').disabled = true;
         }
-        
-        // Product data from URL parameters
-        const productData = {
-            name: decodeURIComponent(getParam('name', 'Product Name')),
-            price: getParam('price', '$0.00'),
-            image: getParam('image', 'image/mainImage.jpeg'),
-            description: decodeURIComponent(getParam('description', 'Product description goes here.')),
-            brand: decodeURIComponent(getParam('brand', 'Unknown')),
-            material: decodeURIComponent(getParam('material', 'Cotton')),
-            size: decodeURIComponent(getParam('size', 'One Size'))
-        };
-        
-        // Update page elements
-        document.getElementById('productName').textContent = productData.name;
-        document.getElementById('productPrice').textContent = productData.price;
-        document.getElementById('productDescription').textContent = productData.description;
-        document.getElementById('productBrand').textContent = productData.brand;
-        document.getElementById('productMaterial').textContent = productData.material;
-        document.getElementById('productSize').textContent = productData.size;
-        document.getElementById('productImage').src = productData.image;
-        
-        // Update page title
-        document.title = productData.name + ' - FS Fashion Marketplace';
-        
-        // Handle button clicks
-        document.querySelector('.add-to-cart-btn').addEventListener('click', function() {
-            alert('Added to cart: ' + productData.name);
-        });
-        
-        document.querySelector('.wishlist-btn').addEventListener('click', function() {
-            this.textContent = this.textContent === '♡ Wishlist' ? '❤️ Added to Wishlist' : '♡ Wishlist';
-        });
+
+        function loadProductDetail() {
+            if (!window.PRODUCTS || !Array.isArray(window.PRODUCTS)) {
+                renderNotFound();
+                return;
+            }
+
+            const product = window.PRODUCTS.find(p => p.id === productId);
+            if (!product) {
+                renderNotFound();
+                return;
+            }
+
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('productPrice').textContent = product.price;
+            document.getElementById('productDescription').textContent = product.description;
+            document.getElementById('productBrand').textContent = product.brand;
+            document.getElementById('productMaterial').textContent = product.material;
+            document.getElementById('productSize').textContent = product.size;
+            // Build image slider
+            const images = Array.isArray(product.images) && product.images.length > 0
+                ? product.images.slice(0, 3)
+                : [product.image || 'image/mainImage.jpeg', product.image || 'image/mainImage.jpeg', product.image || 'image/mainImage.jpeg'];
+
+            const slidesEl = document.getElementById('sliderSlides');
+
+            slidesEl.innerHTML = '';
+            images.forEach((src, idx) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = product.name + ' ' + (idx + 1);
+                img.className = 'product-detail-image';
+                // If an image fails to load, gracefully fallback to primary product image or default
+                img.onerror = function() {
+                    const fallback = product.image || 'image/mainImage.jpeg';
+                    if (this.src.endsWith(fallback)) return; // avoid infinite loop
+                    this.src = fallback;
+                };
+                slide.appendChild(img);
+                slidesEl.appendChild(slide);
+            });
+
+            let currentSlide = 0;
+            function updateSlider() {
+                const total = images.length;
+                const offsetPercent = -(currentSlide * 100);
+                slidesEl.style.transform = 'translateX(' + offsetPercent + '%)';
+            }
+
+            function goToSlide(index) {
+                currentSlide = (index + images.length) % images.length;
+                updateSlider();
+            }
+
+            document.getElementById('sliderPrev').addEventListener('click', () => goToSlide(currentSlide - 1));
+            document.getElementById('sliderNext').addEventListener('click', () => goToSlide(currentSlide + 1));
+
+            // Initialize slider layout
+            slidesEl.style.display = 'flex';
+            slidesEl.style.transition = 'transform 300ms ease';
+            Array.from(slidesEl.children).forEach(slide => {
+                slide.style.minWidth = '100%';
+            });
+            updateSlider();
+
+            document.title = product.name + ' - FS Fashion Marketplace';
+
+            document.querySelector('.add-to-cart-btn').addEventListener('click', function() {
+                alert('Added to cart: ' + product.name);
+                // Example cart persistence (optional):
+                // const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                // cart.push({ id: product.id, qty: 1 });
+                // localStorage.setItem('cart', JSON.stringify(cart));
+            });
+
+            document.querySelector('.wishlist-btn').addEventListener('click', function() {
+                this.textContent = this.textContent === '♡ Wishlist' ? '❤️ Added to Wishlist' : '♡ Wishlist';
+            });
+        }
+
+        loadProductDetail();
     </script>
 </body>
 </html>

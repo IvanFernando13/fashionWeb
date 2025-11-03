@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category - FS Fashion Marketplace</title>
+    <title>Brand - FS Fashion Marketplace</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="brands-page">
+<body class="brands-page brand-list-page">
     <!-- Header -->
     <header class="header">
         <div class="header-container">
@@ -34,46 +34,11 @@
         </div>
     </header>
 
-    <!-- Main Content Grid (Category chooser) -->
-    <section class="category-grid" id="categoryChooser">
-        <a href="categoryPage.html?category=tops" class="brand-item-link">
-            <div class="brand-item">
-                <img src="image/topsCat.jpeg" alt="Tops" class="brand-image">
-                <div class="brand-overlay">
-                    <span class="overlay-text">Tops</span>
-                </div>
-            </div>
-        </a>
-        <a href="categoryPage.html?category=outerwear" class="brand-item-link">
-            <div class="brand-item">
-                <img src="image/outerwearCategory.jpeg" alt="Outerwear" class="brand-image">
-                <div class="brand-overlay">
-                    <span class="overlay-text">Outerwear</span>
-                </div>
-            </div>
-        </a>
-        <a href="categoryPage.html?category=bottoms" class="brand-item-link">
-            <div class="brand-item">
-                <img src="image/bottomsCat.jpeg" alt="Bottoms" class="brand-image">
-                <div class="brand-overlay">
-                    <span class="overlay-text">Bottoms</span>
-                </div>
-            </div>
-        </a>
-        <a href="categoryPage.html?category=accessories" class="brand-item-link">
-            <div class="brand-item">
-                <img src="image/accessoriesCat.jpeg" alt="Accessories" class="brand-image">
-                <div class="brand-overlay">
-                    <span class="overlay-text">Accessories</span>
-                </div>
-            </div>
-        </a>
-    </section>
-
-    <!-- Dynamic Product Listing (shown when ?category=...) -->
-    <section class="product-page" id="categoryListing" style="display:none;">
-        <h1 class="page-title" id="categoryTitle"></h1>
-        <div class="product-grid" id="productGrid"></div>
+    <!-- Dynamic Product Listing by Brand -->
+    <section class="product-page" id="brandListing">
+        <a href="javascript:history.back()" class="back-link">← Back to Product Page</a>
+        <h1 class="page-title" id="brandTitle"></h1>
+        <div class="product-grid" id="brandGrid"></div>
     </section>
 
     <!-- Footer -->
@@ -100,30 +65,22 @@
             </div>
         </div>
     </footer>
+
     <script src="products.js"></script>
     <script>
         (function() {
             const params = new URLSearchParams(window.location.search);
-            const category = (params.get('category') || '').toLowerCase();
-            if (!category) return; // show chooser by default
+            const brand = (params.get('brand') || '').trim();
+            const brandDecoded = decodeURIComponent(brand);
 
-            const titleMap = {
-                tops: 'TOPS',
-                outerwear: 'OUTERWEAR',
-                bottoms: 'BOTTOMS',
-                accessories: 'ACCESSORIES'
-            };
+            const title = document.getElementById('brandTitle');
+            title.textContent = brandDecoded ? brandDecoded.toUpperCase() : 'BRAND';
 
-            document.getElementById('categoryChooser').style.display = 'none';
-            const listing = document.getElementById('categoryListing');
-            listing.style.display = '';
-            document.getElementById('categoryTitle').textContent = titleMap[category] || category.toUpperCase();
-
-            const grid = document.getElementById('productGrid');
-            const products = (window.PRODUCTS || []).filter(p => (p.category || '').toLowerCase() === category);
+            const grid = document.getElementById('brandGrid');
+            const products = (window.PRODUCTS || []).filter(p => (p.brand || '').toLowerCase() === brandDecoded.toLowerCase());
 
             if (products.length === 0) {
-                grid.innerHTML = '<p>No products found in this category.</p>';
+                grid.innerHTML = '<p>No products found for this brand.</p>';
                 return;
             }
 
@@ -142,4 +99,5 @@
     </script>
 </body>
 </html>
+
 
