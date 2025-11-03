@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-    /* Scoped slider styles for product detail page */
+    /* Scoped slider styles */
     .slider { position: relative; }
     .slider-viewport { overflow: hidden; width: 100%; }
     .slides { display: flex; }
@@ -33,6 +33,85 @@
     .slider-btn:hover { background: rgba(0,0,0,0.6); }
     #sliderPrev { left: 10px; }
     #sliderNext { right: 10px; }
+    
+    /* Wishlist button active state */
+    .wishlist-btn.active {
+        background-color: #f0f0f0;
+        border-color: #aaa;
+        color: #000;
+    }
+    
+    /* Header link styles */
+    .utility-links .slash {
+            color: #000;
+            margin: 0 5px;
+    }
+    
+    /* NEW Size Selector Styles */
+    .size-selector {
+        margin-top: 20px;
+    }
+    .size-selector-label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .size-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .size-btn {
+        min-width: 50px;
+        height: 50px;
+        padding: 0 15px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        color: #000;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .size-btn:hover {
+        border-color: #000;
+    }
+    .size-btn.selected {
+        background-color: #000;
+        color: #fff;
+        border-color: #000;
+    }
+    .size-error {
+        color: red;
+        font-size: 14px;
+        margin-top: 15px;
+        display: none; /* Hidden by default */
+    }
+
+    /* Cart count indicator */
+    .bag-link {
+        position: relative;
+    }
+    #cart-count {
+        position: absolute;
+        top: -10px;
+        right: -15px;
+        background-color: #000;
+        color: #fff;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+    }
+    #cart-count:empty {
+        display: none;
+    }
+
     @media (min-width: 768px) {
         .slider-btn { width: 56px; height: 56px; font-size: 30px; line-height: 56px; }
         #sliderPrev { left: 14px; }
@@ -41,8 +120,7 @@
     </style>
 </head>
 <body class="brands-page">
-    <!-- Header -->
-    <header class="header">
+    <!-- Header --><header class="header">
         <div class="header-container">
             <div class="logo">
                 <a href="index.html" class="logo-link">
@@ -53,15 +131,17 @@
                 <ul class="nav-links">
                     <li><a href="categoryPage.html">Shop</a></li>
                     <li><a href="brandsPage.html">Brands</a></li>
-                    <li><a href="#search">Search</a></li>
+                    <li><a href="searchPage.html">Search</a></li>
                     <li><a href="inspirationPage.html">Inspiration</a></li>
                     <li><a href="#games">Games</a></li>
                 </ul>
             </nav>
             <div class="right-actions">
-                <a href="#bag" class="bag-link">Bag</a>
-                <div class="utility-links">
-                    <a href="#account">Account</a>
+                <!-- Updated Bag link -->
+                <a href="bagPage.html" class="bag-link">Bag <span id="cart-count"></span></a>
+                <div class="utility-links" id="header-utility-links">
+                    <!-- This part will be updated by script -->
+                    <a href="accountPage.html">Account</a>
                 </div>
             </div>
         </div>
@@ -89,9 +169,18 @@
                     Product description goes here. This is where detailed information about the product will be displayed.
                 </p>
                 
+                <!-- NEW Size Selector -->
+                <div class="size-selector" id="size-selector-container">
+                    <label class="size-selector-label">Size</label>
+                    <div class="size-options" id="size-options">
+                        <!-- Size buttons will be injected here -->
+                    </div>
+                    <p class="size-error" id="size-error">Please select a size.</p>
+                </div>
+                
                 <div class="product-detail-actions">
-                    <button class="add-to-cart-btn">Add to Cart</button>
-                    <button class="wishlist-btn">♡ Wishlist</button>
+                    <button class="add-to-cart-btn" id="add-to-cart-btn">Add to Cart</button>
+                    <button class="wishlist-btn" id="wishlist-btn">♡ Wishlist</button>
                 </div>
                 
                 <div class="product-detail-specs">
@@ -112,8 +201,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Footer --><footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
                 <h3>Brands</h3>
@@ -139,10 +227,52 @@
 
     <script src="products.js"></script>
     <script>
-        // Load product by ID from products.js
+        // --- START OF UPDATED SCRIPT ---
+        
+        // --- GLOBAL VARS ---
         const params = new URLSearchParams(window.location.search);
         const productId = params.get('id');
+        const usersStorageKey = 'fs_users';
+        const cartKey = 'fs_cart';
+        const user = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        let selectedSize = null;
+        let currentProduct = null;
 
+        // --- Helper: Update Cart Count in Header ---
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const countEl = document.getElementById('cart-count');
+            if (countEl) {
+                countEl.textContent = count > 0 ? count : '';
+            }
+        }
+
+        // --- HEADER SCRIPT ---
+        function setupHeader() {
+            const utilityLinks = document.getElementById('header-utility-links');
+            if (user) {
+                utilityLinks.innerHTML = `
+                    <a href="accountMain.html" style="font-weight: bold;">${user.username}</a>
+                    <span class="slash">/</span>
+                    <a href="#" id="header-logout-link">Log Out</a>
+                `;
+                const headerLogout = document.getElementById('header-logout-link');
+                if (headerLogout) {
+                    headerLogout.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        sessionStorage.removeItem('loggedInUser');
+                        alert('You have been logged out.');
+                        window.location.href = 'accountPage.html';
+                    });
+                }
+            } else {
+                utilityLinks.innerHTML = '<a href="accountPage.html">Account</a>';
+            }
+            updateCartCount(); // Update cart count on load
+        }
+
+        // --- PRODUCT PAGE SCRIPT ---
         function renderNotFound() {
             document.getElementById('productName').textContent = 'Product Not Found';
             document.getElementById('productPrice').textContent = '';
@@ -150,9 +280,62 @@
             document.getElementById('productBrand').textContent = '-';
             document.getElementById('productMaterial').textContent = '-';
             document.getElementById('productSize').textContent = '-';
-            document.getElementById('productImage').src = 'image/mainImage.jpeg';
             document.title = 'Product Not Found - FS Fashion Marketplace';
             document.querySelector('.add-to-cart-btn').disabled = true;
+        }
+        
+        // --- UPDATED: Size Option Generator ---
+        function generateSizeOptions(product) {
+            const sizeString = product.size || "One Size";
+            const sizeContainer = document.getElementById('size-options');
+            let options = [];
+
+            // NEW LOGIC:
+            if (sizeString.match(/^\d+-\d+$/)) { // e.g., "39-42"
+                const [start, end] = sizeString.split('-').map(Number);
+                for (let i = start; i <= end; i++) {
+                    options.push(i.toString());
+                }
+            } else if (sizeString.match(/^[A-Z]+-[A-Z]+$/)) { // e.g., "XS-XL"
+                const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']; // Base sizes
+                const [startSize, endSize] = sizeString.split('-');
+                const startIndex = sizes.indexOf(startSize);
+                const endIndex = sizes.indexOf(endSize);
+                
+                if (startIndex !== -1 && endIndex !== -1) {
+                    options = sizes.slice(startIndex, endIndex + 1);
+                } else {
+                    options = [sizeString]; // Fallback if range is invalid
+                }
+            } else { // Default/Fallback for "One Size", "all size", etc.
+                options = [sizeString]; // Use the string itself, e.g., "One Size"
+            }
+            
+            // This part of the logic remains the same
+            if (options.length === 0) {
+                 document.getElementById('size-selector-container').style.display = 'none';
+                 return;
+            }
+            
+            sizeContainer.innerHTML = options.map(size => 
+                `<button class="size-btn" data-size="${size}">${size}</button>`
+            ).join('');
+            
+            // Add click listeners to new size buttons
+            sizeContainer.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeContainer.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedSize = btn.dataset.size;
+                    document.getElementById('size-error').style.display = 'none';
+                });
+            });
+            
+            // Pre-select if it's the only option (e.g., "One Size")
+            if (options.length === 1) {
+                 sizeContainer.querySelector('.size-btn').classList.add('selected');
+                 selectedSize = options[0];
+            }
         }
 
         function loadProductDetail() {
@@ -161,81 +344,172 @@
                 return;
             }
 
-            const product = window.PRODUCTS.find(p => p.id === productId);
-            if (!product) {
+            currentProduct = window.PRODUCTS.find(p => p.id === productId);
+            if (!currentProduct) {
                 renderNotFound();
                 return;
             }
 
-            document.getElementById('productName').textContent = product.name;
-            document.getElementById('productPrice').textContent = product.price;
-            document.getElementById('productDescription').textContent = product.description;
-            document.getElementById('productBrand').textContent = product.brand;
-            document.getElementById('productMaterial').textContent = product.material;
-            document.getElementById('productSize').textContent = product.size;
-            // Build image slider
-            const images = Array.isArray(product.images) && product.images.length > 0
-                ? product.images.slice(0, 3)
-                : [product.image || 'image/mainImage.jpeg', product.image || 'image/mainImage.jpeg', product.image || 'image/mainImage.jpeg'];
+            document.getElementById('productName').textContent = currentProduct.name;
+            document.getElementById('productPrice').textContent = currentProduct.price;
+            document.getElementById('productDescription').textContent = currentProduct.description;
+            document.getElementById('productBrand').textContent = currentProduct.brand;
+            document.getElementById('productMaterial').textContent = currentProduct.material;
+            
+            // Update the spec size display to use the new standardized size
+            document.getElementById('productSize').textContent = currentProduct.size; 
+            
+            // --- Generate Size Options ---
+            // Pass the whole product object
+            generateSizeOptions(currentProduct); 
+            
+            // --- Image Slider Logic ---
+            const images = Array.isArray(currentProduct.images) && currentProduct.images.length > 0
+                ? currentProduct.images
+                : [currentProduct.image || 'image/mainImage.jpeg'];
 
             const slidesEl = document.getElementById('sliderSlides');
-
-            slidesEl.innerHTML = '';
-            images.forEach((src, idx) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = product.name + ' ' + (idx + 1);
-                img.className = 'product-detail-image';
-                // If an image fails to load, gracefully fallback to primary product image or default
-                img.onerror = function() {
-                    const fallback = product.image || 'image/mainImage.jpeg';
-                    if (this.src.endsWith(fallback)) return; // avoid infinite loop
-                    this.src = fallback;
-                };
-                slide.appendChild(img);
-                slidesEl.appendChild(slide);
-            });
+            slidesEl.innerHTML = images.map((src, idx) => {
+                const altText = `${currentProduct.name} ${idx + 1}`;
+                const fallbackSrc = currentProduct.image || 'image/mainImage.jpeg';
+                const onErrorScript = `if (this.src.endsWith('${fallbackSrc}')) return; this.src = '${fallbackSrc}'`;
+                
+                return `
+                    <div class="slide">
+                        <img src="${src}" alt="${altText}" class="product-detail-image" onerror="${onErrorScript}">
+                    </div>
+                `;
+            }).join('');
 
             let currentSlide = 0;
+            const slideElements = slidesEl.querySelectorAll('.slide');
+            const totalSlides = slideElements.length;
+
             function updateSlider() {
-                const total = images.length;
                 const offsetPercent = -(currentSlide * 100);
-                slidesEl.style.transform = 'translateX(' + offsetPercent + '%)';
+                slidesEl.style.transform = `translateX(${offsetPercent}%)`;
+                document.getElementById('sliderPrev').style.display = totalSlides > 1 ? 'flex' : 'none';
+                document.getElementById('sliderNext').style.display = totalSlides > 1 ? 'flex' : 'none';
             }
 
             function goToSlide(index) {
-                currentSlide = (index + images.length) % images.length;
+                currentSlide = (index + totalSlides) % totalSlides;
                 updateSlider();
             }
 
             document.getElementById('sliderPrev').addEventListener('click', () => goToSlide(currentSlide - 1));
             document.getElementById('sliderNext').addEventListener('click', () => goToSlide(currentSlide + 1));
 
-            // Initialize slider layout
             slidesEl.style.display = 'flex';
             slidesEl.style.transition = 'transform 300ms ease';
-            Array.from(slidesEl.children).forEach(slide => {
+            slideElements.forEach(slide => {
                 slide.style.minWidth = '100%';
             });
             updateSlider();
+            // --- End Image Slider Logic ---
 
-            document.title = product.name + ' - FS Fashion Marketplace';
+            document.title = currentProduct.name + ' - FS Fashion Marketplace';
 
-            document.querySelector('.add-to-cart-btn').addEventListener('click', function() {
-                alert('Added to cart: ' + product.name);
-                // Example cart persistence (optional):
-                // const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-                // cart.push({ id: product.id, qty: 1 });
-                // localStorage.setItem('cart', JSON.stringify(cart));
+            // --- UPDATED Add to Cart Logic ---
+            document.getElementById('add-to-cart-btn').addEventListener('click', function() {
+                // 1. Check if size is selected
+                if (!selectedSize) {
+                    document.getElementById('size-error').style.display = 'block';
+                    return;
+                }
+                
+                // 2. Get cart from localStorage
+                let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                
+                // 3. Create a unique ID for this item (product ID + size)
+                const uniqueItemId = `${currentProduct.id}_${selectedSize}`;
+                
+                // 4. Check if item with this unique ID is already in cart
+                const existingItemIndex = cart.findIndex(item => item.uniqueId === uniqueItemId);
+                
+                if (existingItemIndex > -1) {
+                    // Item already in cart, increment quantity
+                    cart[existingItemIndex].quantity += 1;
+                } else {
+                    // Item not in cart, add as new item
+                    cart.push({
+                        id: currentProduct.id,
+                        uniqueId: uniqueItemId,
+                        name: currentProduct.name,
+                        price: currentProduct.price,
+                        image: currentProduct.image,
+                        size: selectedSize,
+                        quantity: 1
+                    });
+                }
+                
+                // 5. Save updated cart to localStorage
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                
+                // 6. Give user feedback
+                alert('Added to Bag: ' + currentProduct.name + ' (Size: ' + selectedSize + ')');
+                
+                // 7. Update header cart count
+                updateCartCount();
             });
 
-            document.querySelector('.wishlist-btn').addEventListener('click', function() {
-                this.textContent = this.textContent === '♡ Wishlist' ? '❤️ Added to Wishlist' : '♡ Wishlist';
+            // --- WISHLIST LOGIC ---
+            const wishlistBtn = document.getElementById('wishlist-btn');
+            
+            function getWishlist() {
+                if (!user) return null;
+                const allUsers = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+                const currentUserData = allUsers.find(u => u.email === user.email);
+                return currentUserData ? currentUserData.wishlist : null;
+            }
+
+            function saveWishlist(wishlist) {
+                if (!user) return;
+                let allUsers = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+                let userIndex = allUsers.findIndex(u => u.email === user.email);
+                if (userIndex !== -1) {
+                    allUsers[userIndex].wishlist = wishlist;
+                    localStorage.setItem(usersStorageKey, JSON.stringify(allUsers));
+                }
+            }
+            
+            function updateWishlistButton() {
+                const wishlist = getWishlist();
+                if (wishlist && wishlist.includes(productId)) {
+                    wishlistBtn.textContent = '❤️ Added to Wishlist';
+                    wishlistBtn.classList.add('active');
+                } else {
+                    wishlistBtn.textContent = '♡ Wishlist';
+                    wishlistBtn.classList.remove('active');
+                }
+            }
+
+            updateWishlistButton();
+
+            wishlistBtn.addEventListener('click', function() {
+                if (!user) {
+                    alert('Please sign in to add items to your wishlist.');
+                    window.location.href = `accountPage.html?redirect=productPage.html?id=${productId}`;
+                    return;
+                }
+                
+                let wishlist = getWishlist();
+                if (wishlist === null) return; 
+
+                if (wishlist.includes(productId)) {
+                    wishlist = wishlist.filter(id => id !== productId);
+                } else {
+                    wishlist.push(productId);
+                }
+                
+                saveWishlist(wishlist);
+                updateWishlistButton();
             });
+            // --- END WISHLIST LOGIC ---
         }
 
+        // --- RUN SCRIPT ---
+        setupHeader();
         loadProductDetail();
     </script>
 </body>

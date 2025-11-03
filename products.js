@@ -33,7 +33,7 @@ window.PRODUCTS = [
         description: "Midweight pigment dyed 220gsm cotton jersey. Screenprinted with water-based ink for a soft hand feel",
         brand: "Stussy",
         material: "100% Cotton",
-        size: "XS-XXL",
+        size: "XS-XL",
         category: "tops"
     },
     {
@@ -48,7 +48,7 @@ window.PRODUCTS = [
         description: "The Brent Vest is made from lightweight polyester fabric and is padded with artificial down. Two patch pockets appear on the front. A woven Square Label completes the design.",
         brand: "Carhartt WIP",
         material: "100% Polyester",
-        size: "XS-L",
+        size: "XS-XL",
         category: "tops"
     },
     {
@@ -79,7 +79,7 @@ window.PRODUCTS = [
         description: "The Chaos Shirt is made from 100% cotton and is printed with the Vivienne Westwood logo. It is a unisex shirt and is available in a range of sizes.",
         brand: "Vivienne Westwood",
         material: "100% Cotton",
-        size: "S-XL",
+        size: "XS-XL",
         category: "tops"
     },
     {
@@ -94,105 +94,10 @@ window.PRODUCTS = [
         description: "The Vista Sweatshirt is made from 100% cotton and is printed with the Carhartt WIP logo. It is a unisex sweatshirt and is available in a range of sizes.",
         brand: "Carhartt WIP",
         material: "100% Cotton",
-        size: "S-XL",
+        size: "XS-XL",
         category: "tops"
     },
-    {
-        id: "107",
-        name: "Gucci Web Stripe Polo",
-        price: "$570.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/gucciBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Cotton piqué polo with signature Web detail.",
-        brand: "Gucci",
-        material: "Cotton",
-        size: "XS-L",
-        category: "tops"
-    },
-    {
-        id: "108",
-        name: "Acne Studios Face Logo Tee",
-        price: "$140.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/acneStudiosBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Minimalist T-shirt with micro face patch.",
-        brand: "Acne Studios",
-        material: "Cotton",
-        size: "XXS-M",
-        category: "tops"
-    },
-    {
-        id: "109",
-        name: "AMBUSH Chain Shirt",
-        price: "$290.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/ambushBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Relaxed fit tee with removable chain.",
-        brand: "AMBUSH",
-        material: "Cotton/Metal",
-        size: "S-L",
-        category: "tops"
-    },
-    {
-        id: "110",
-        name: "Prada Graphic Print Shirt",
-        price: "$710.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/pradaBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Short sleeve shirt with bold digital print.",
-        brand: "Prada",
-        material: "Cotton",
-        size: "M-XL",
-        category: "tops"
-    },
-    {
-        id: "111",
-        name: "BAPE Shark Hoodie",
-        price: "$480.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/bapeBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Zip-up hoodie with printed shark mouth hood.",
-        brand: "BAPE",
-        material: "Cotton",
-        size: "S-L",
-        category: "tops"
-    },
-    {
-        id: "112",
-        name: "Dior Oblique Shirt",
-        price: "$900.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/diorBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Allover monogram print button-down.",
-        brand: "Dior",
-        material: "Silk",
-        size: "S-XL",
-        category: "tops"
-    },
+    
     // OUTERWEAR (12 products)
     {
         id: "201",
@@ -207,7 +112,7 @@ window.PRODUCTS = [
         description: "100% cotton. Made in Tunisia. Machine wash. Front button closure",
         brand: "Carhartt WIP",
         material: "100% Cotton: A very soft and pleasant material whose properties include tensile strength and elongation at break.",
-        size: "S-XXL",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -223,7 +128,7 @@ window.PRODUCTS = [
         description: "BALENCIAGA 3B SPORTS ICON TRACK JACKET IN BLACK",
         brand: "Balenciaga",
         material: "100% Polyester",
-        size: "S-XL",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -239,7 +144,7 @@ window.PRODUCTS = [
         description: "The OG Active Jacket is constructed in our original loose fit from Maitland denim, which is a heavyweight cotton fabric. It also features an insulating, striped blanket lining. A kangaroo pocket and adjustable hood offer functional touches, while triple-stitch details provide extra durability.",
         brand: "Carhartt WIP",
         material: "100% Organic Cotton 'Dearborn' Canvas, 12oz",
-        size: "XS-XXL",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -255,7 +160,7 @@ window.PRODUCTS = [
         description: "Made in Italy.",
         brand: "Maison Margiela",
         material: "Cotton 57%, Viscose 43%",
-        size: "XS-XXL",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -271,7 +176,7 @@ window.PRODUCTS = [
         description: "KAPITAL gets its name from Kojima, Okayama – Japan's 'Denim Capital'. Demonstrating that speciality, this jacket is distressed and repaired using sashiko stitching, a traditional technique used to extend a fabric's life. The front is fitted with a few slanted pockets, while the back depicts an impressively patchworked Virgin Mary.",
         brand: "Kapital",
         material: "Fabric1: 90% cotton, 10% linen; fabric2: 100% cotton",
-        size: "S-XL",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -304,7 +209,7 @@ window.PRODUCTS = [
         description: "Made in Italy. Black. Classic Collar",
         brand: "Balenciaga",
         material: "100% Lambskin",
-        size: "S-XXL",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -335,7 +240,7 @@ window.PRODUCTS = [
         description: "The Vivienne Westwood Wreck Jacket is a unique piece that is made from 100% cotton and is printed with the Vivienne Westwood logo. It is a unisex jacket and is available in a range of sizes.",
         brand: "Vivienne Westwood",
         material: "100% Cotton",
-        size: "S-L",
+        size: "XS-XL",
         category: "outerwear"
     },
     {
@@ -351,38 +256,6 @@ window.PRODUCTS = [
         description: "The Carhartt WIP Detroit Jacket is a unique piece that is made from 100% cotton and is printed with the Carhartt WIP logo. It is a unisex jacket and is available in a range of sizes.",
         brand: "Carhartt WIP",
         material: "100% Cotton",
-        size: "XS-XXL",
-        category: "outerwear"
-    },
-    {
-        id: "211",
-        name: "Maharishi Snopants Parka",
-        price: "$450.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/maharishiBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Sustainable hemp/cotton fishtail parka.",
-        brand: "Maharishi",
-        material: "Hemp/Cotton",
-        size: "L-XL",
-        category: "outerwear"
-    },
-    {
-        id: "212",
-        name: "Balenciaga Track Jacket",
-        price: "$1,090.00",
-        image: "image/balencolor.jpg",
-        images: [
-            "image/balencolor.jpg",
-            "image/balenciagaBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "Oversized nylon jacket with logo at chest.",
-        brand: "Balenciaga",
-        material: "Nylon",
         size: "XS-XL",
         category: "outerwear"
     },
@@ -401,7 +274,7 @@ window.PRODUCTS = [
         description: "These workwear-inspired trousers feature a loose, high-waisted fit, offering a relaxed yet refined silhouette. The roomy upper tapers subtly toward the ankle for a more structured look, while the back cinch allows for a customized fit. Finished with a branded woven patch, they blend functionality and aesthetics.",
         brand: "Kapital",
         material: "100% Cotton",
-        size: "1-3",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -417,7 +290,7 @@ window.PRODUCTS = [
         description: "Lean into a laidback vibe with the 3B Sports Icon track pants from Balenciaga. The easygoing wide-leg silhouette is crafted from cotton jersey for unbeatable comfort and is accented with contrasting piping and a signature logo embellishment.",
         brand: "Balenciaga",
         material: "100% polyamide",
-        size: "XXS-XXXL",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -434,7 +307,7 @@ window.PRODUCTS = [
         description: "Made in Italy. 100% cotton. Machine wash.",
         brand: "Maison Margiela",
         material: "100% Cotton",
-        size: "S-XL",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -450,7 +323,7 @@ window.PRODUCTS = [
         description: "Relaxed fit carpenter pant in cotton canvas. Slightly tapered cut",
         brand: "Stussy",
         material: "100% Cotton",
-        size: "28-38",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -466,7 +339,7 @@ window.PRODUCTS = [
         description: "The perfect blend of modern and vintage, these trousers are a must-have for any wardrobe.",
         brand: "Balenciaga",
         material: "100% Cotton",
-        size: "XS-XXL",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -482,7 +355,7 @@ window.PRODUCTS = [
         description: "Mesh-lined athletic shorts, color block design.",
         brand: "Rick Owens",
         material: "100% Organic Cotton",
-        size: "S-xL",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -498,7 +371,7 @@ window.PRODUCTS = [
         description: "When buying this unisex item, keep in mind that it is graded in standard men's sizing",
         brand: "Comme Des Garçons",
         material: "100% Polyester",
-        size: "S-XL",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -514,7 +387,7 @@ window.PRODUCTS = [
         description: "Tapered wool-blend dress trousers.",
         brand: "Acne Studios",
         material: "Wool Blend",
-        size: "28-36",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -530,7 +403,7 @@ window.PRODUCTS = [
         description: "Vivienne Westwood Buckle Back jeans feature a diagonal bleached-fade effect, paired with a mid-rise waistband that fastens with an orb-embossed pearl button. At the back, a refreshed ‘Westwood’ leather patch and our signature 'VW' topstitching on the pockets complete the design.",
         brand: "Vivienne Westwood",
         material: "100% Cotton",
-        size: "30-38",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -546,7 +419,7 @@ window.PRODUCTS = [
         description: "The Vivienne Westwood Builder Trousers are a unique piece that is made from 100% cotton and is printed with the Vivienne Westwood logo. It is a unisex trousers and is available in a range of sizes.",
         brand: "Vivienne Westwood",
         material: "100% Cotton",
-        size: "XS-L",
+        size: "XS-XL",
         category: "bottoms"
     },
     {
@@ -562,25 +435,10 @@ window.PRODUCTS = [
         description: "2006 jeans are cut to a loose fit with a low waist and wide, long legs. Crafted from rigid denim, featuring a wash with irregular bleach and dirt marks for an authentically worn-in look.",
         brand: "Comme des Garçons",
         material: "100% Cotton",
-        size: "28-38",
+        size: "XS-XL",
         category: "bottoms"
     },
-    {
-        id: "312",
-        name: "Vetements All Over Logo Jeans",
-        price: "$990.00",
-        image: "image/mainImage.jpeg",
-        images: [
-            "image/mainImage.jpeg",
-            "image/vetementsBrands.jpg",
-            "image/mainImage.jpeg"
-        ],
-        description: "High-waisted jeans, all-over print.",
-        brand: "Vetements",
-        material: "Denim",
-        size: "26-38",
-        category: "bottoms"
-    },
+    
     // ACCESSORIES (12+ products)
     {
         id: "401",
@@ -614,7 +472,7 @@ window.PRODUCTS = [
         
         brand: "Rick Owens",
         material: "100% Cow Leather",
-        size: "EU 39-44",
+        size: "EU 39-42",
         category: "accessories"
     },
     {
@@ -663,7 +521,7 @@ window.PRODUCTS = [
         description: "Anatomic ankle boots in nappa leather with a curved tonal heel and inner side zip. MM6’s discreet yet distinct signature, a horizontal white stitch line, is present on the back of the shoes. 3.5 cm heel.",
         brand: "Maison Margiela",
         material: "100% calf leather",
-        size: "EU 39-46",
+        size: "EU 39-42",
         category: "accessories"
     },
     {
@@ -679,7 +537,7 @@ window.PRODUCTS = [
         description: "Cargo Sneakers in grey, white and yellow microfiber and mesh.",
         brand: "Balenciaga",
         material: "50% polyurethane, 30% polyester, 20% nylon",
-        size: "EU 39-46",
+        size: "EU 39-42",
         category: "accessories"
     },
     {
@@ -712,7 +570,7 @@ window.PRODUCTS = [
         description: "jet black/milk white. suede/calf leather. grained texture. contrast stitching",
         brand: "Rick Owens",
         material: "100% Leather",
-        size: "38-46",
+        size: "EU 39-42",
         category: "accessories"
     },
     {
@@ -744,7 +602,7 @@ window.PRODUCTS = [
         description: "Crafted from soft nappa leather, the babouche shoes feature the Tabi split-toe, inspired by the traditional 15th century Japanese sock bearing the same name – launched for the Maison's debut collection in 1989. It captures the avant-garde and insubordinate spirit of the Maison and exists as a heritage classic, continually explored through each collection.",
         brand: "Maison Margiela",
         material: "100% Camel Leather",
-        size: "39-46",
+        size: "EU 39-42",
         category: "accessories"
     },
     {

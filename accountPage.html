@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - FS Fashion Marketplace</title>
+    <!-- Main stylesheet from your project --><link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts link from your other pages --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- New styles for the account page --><style>
+        .account-page-container {
+            max-width: 500px; /* Adjust width as needed to match screenshot */
+            margin: 0 auto;
+            /* Using the same padding as .product-page to push content down */
+            padding: 150px 20px 80px; 
+            min-height: calc(100vh - 300px); /* Ensure footer isn't too high */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .auth-tabs {
+            display: flex;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            color: #888;
+            background: none;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #000;
+            border-bottom: 2px solid #000;
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: #555;
+        }
+
+        .auth-form-section {
+            width: 100%;
+            display: none; /* Hidden by default, JS will show active tab */
+        }
+        
+        .auth-form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 30px; /* Space between form groups */
+            width: 100%;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group label.required::after {
+            content: ' *';
+            color: red;
+        }
+
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #000;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background: transparent;
+            outline: none;
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="text"]:focus {
+            border-bottom-color: #000;
+        }
+
+        /* Error styling */
+        .form-group.error input {
+            border-bottom-color: red;
+        }
+
+        .form-group .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none; /* Hidden by default, JS will show */
+        }
+        
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #000;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px; /* Added margin to separate from password field */
+        }
+
+        .submit-btn:hover {
+            background-color: #333;
+        }
+        
+        /* General auth error message (for login fails, etc.) */
+        .auth-error {
+            color: red;
+            background-color: #ffe5e5;
+            border: 1px solid red;
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+            display: none; /* Hidden by default */
+            border-radius: 4px;
+        }
+        
+        /* Cart count indicator */
+        .bag-link {
+            position: relative;
+        }
+        #cart-count {
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        #cart-count:empty {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .account-page-container {
+                padding: 120px 20px 60px;
+                max-width: 400px;
+            }
+            .tab-btn {
+                font-size: 18px;
+                padding: 12px 0;
+            }
+            .form-group label {
+                font-size: 15px;
+            }
+            .form-group input {
+                font-size: 16px;
+            }
+            .submit-btn {
+                font-size: 16px;
+                padding: 12px 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            .account-page-container {
+                padding: 100px 15px 40px;
+                max-width: 100%; /* Full width on smaller mobiles */
+            }
+            .tab-btn {
+                font-size: 16px;
+                padding: 10px 0;
+            }
+            .form-group {
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<!-- Using 'brands-page' class on the body to ensure the white background and black text from styles.css is applied --><body class="brands-page">
+
+    <!-- Header --><header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">FS</span>
+                </a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <li><a href="searchPage.html">Search</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="#games">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <!-- Updated Bag link -->
+                <a href="bagPage.html" class="bag-link">Bag <span id="cart-count"></span></a>
+                <div class="utility-links" id="header-utility-links">
+                    <!-- Updated Account link to point to this page --><a href="accountPage.html">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Account Section --><main class="account-page-container">
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="signIn">Sign In</button>
+            <button class="tab-btn" data-tab="createAccount">Create Account</button>
+        </div>
+        
+        <!-- General Error Message Box -->
+        <div id="authError" class="auth-error"></div>
+
+        <!-- Sign In Form Section --><section id="signIn" class="auth-form-section active">
+            <form action="#" method="post" id="signInForm">
+                <div class="form-group" id="signInEmailGroup">
+                    <label for="signInEmail" class="required">Email</label>
+                    <input type="email" id="signInEmail" name="email" required>
+                    <p class="error-message">This field is required.</p>
+                </div>
+                <div class="form-group" id="signInPasswordGroup">
+                    <label for="signInPassword" class="required">Password</label>
+                    <input type="password" id="signInPassword" name="password" required>
+                    <p class="error-message">This field is required.</p>
+                </div>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </section>
+
+        <!-- Create Account Form Section (Initially hidden) --><section id="createAccount" class="auth-form-section">
+            <form action="#" method="post" id="createAccountForm">
+                <div class="form-group" id="createUsernameGroup">
+                    <label for="createUsername" class="required">Username</label>
+                    <input type="text" id="createUsername" name="username" required>
+                    <p class="error-message">This field is required.</p>
+                </div>
+                <div class="form-group" id="createEmailGroup">
+                    <label for="createEmail" class="required">Email</label>
+                    <input type="email" id="createEmail" name="email" required>
+                    <p class="error-message">This field is required.</p>
+                </div>
+                <div class="form-group" id="createPasswordGroup">
+                    <label for="createPassword" class="required">Password</label>
+                    <input type="password" id="createPassword" name="password" required>
+                    <p class="error-message">This field is required.</p>
+                </div>
+                <div class="form-group" id="confirmPasswordGroup">
+                    <label for="confirmPassword" class="required">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <p class="error-message">This field is required.</p>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer --><footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li>Rick Owens</li>
+                    <li>Maison Margiela</li>
+                    <li>Balenciaga</li>
+                    <li>Vivienne Westwood</li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- UPDATED SCRIPT with full authentication logic --><script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartKey = 'fs_cart';
+
+            // --- Helper: Update Cart Count in Header ---
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const countEl = document.getElementById('cart-count');
+                if (countEl) {
+                    countEl.textContent = count > 0 ? count : '';
+                }
+            }
+            
+            // --- Run on load ---
+            updateCartCount();
+
+            // --- REDIRECT IF ALREADY LOGGED IN ---
+            // Check session storage if a user is already logged in
+            if (sessionStorage.getItem('loggedInUser')) {
+                window.location.href = 'accountMain.html';
+                return; // Stop running the script on this page
+            }
+            
+            // --- Update Header Links (to show 'Account') ---
+            const utilityLinks = document.getElementById('header-utility-links');
+            if (utilityLinks) {
+                utilityLinks.innerHTML = '<a href="accountPage.html">Account</a>';
+            }
+
+            // --- Get Elements ---
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const authSections = document.querySelectorAll('.auth-form-section');
+            const signInForm = document.getElementById('signInForm');
+            const createAccountForm = document.getElementById('createAccountForm');
+            const authError = document.getElementById('authError');
+            
+            const usersStorageKey = 'fs_users'; // Key for localStorage
+
+            // --- Function to show general auth error ---
+            function showAuthError(message) {
+                authError.textContent = message;
+                authError.style.display = 'block';
+            }
+            
+            // --- Function to hide general auth error ---
+            function hideAuthError() {
+                authError.style.display = 'none';
+            }
+
+            // --- Function to switch tabs ---
+            function switchTab(tabId) {
+                hideAuthError(); // Hide errors when switching tabs
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                authSections.forEach(sec => sec.classList.remove('active'));
+
+                document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            }
+
+            // --- Event listeners for tab buttons ---
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+
+            // --- Basic form validation for 'required' fields ---
+            function validateForm(form) {
+                let isValid = true;
+                hideAuthError();
+                const requiredInputs = form.querySelectorAll('input[required]');
+
+                requiredInputs.forEach(input => {
+                    const formGroup = input.closest('.form-group');
+                    if (!input.value.trim()) {
+                        formGroup.classList.add('error');
+                        isValid = false;
+                    } else {
+                        formGroup.classList.remove('error');
+                    }
+                });
+                return isValid;
+            }
+
+            // --- Event listener for Sign In form submission ---
+            signInForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent actual form submission
+                if (!validateForm(this)) {
+                    showAuthError('Please fill in all required fields.');
+                    return;
+                }
+                
+                const email = document.getElementById('signInEmail').value;
+                const password = document.getElementById('signInPassword').value;
+                
+                // Get users from localStorage
+                const users = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+                
+                // Find user
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    // *** THIS IS THE KEY PART ***
+                    // SUCCESSFUL LOGIN: Store user info in session storage
+                    sessionStorage.setItem('loggedInUser', JSON.stringify({ email: user.email, username: user.username }));
+                    
+                    alert('Sign In successful! Redirecting to your account.');
+                    // Redirect to main account page
+                    window.location.href = 'accountMain.html';
+                } else {
+                    // FAILED LOGIN
+                    showAuthError('Invalid email or password. Please try again.');
+                }
+            });
+
+            // --- Event listener for Create Account form submission ---
+            createAccountForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent actual form submission
+                if (!validateForm(this)) {
+                    showAuthError('Please fill in all required fields to create an account.');
+                    return;
+                }
+                
+                const username = document.getElementById('createUsername').value;
+                const email = document.getElementById('createEmail').value;
+                const password = document.getElementById('createPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    confirmPasswordGroup.classList.add('error');
+                    confirmPasswordGroup.querySelector('.error-message').textContent = 'Passwords do not match.';
+                    showAuthError('Passwords do not match.');
+                    return;
+                } else {
+                    confirmPasswordGroup.classList.remove('error');
+                    confirmPasswordGroup.querySelector('.error-message').textContent = 'This field is required.'; // Reset message
+                }
+                
+                // Get existing users
+                const users = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+                
+                // Check if email already exists
+                if (users.find(u => u.email === email)) {
+                    showAuthError('An account with this email already exists. Please sign in.');
+                    document.getElementById('createEmailGroup').classList.add('error');
+                    return;
+                }
+                
+                // Add new user
+                const newUser = { username, email, password, wishlist: [] }; // Add empty wishlist
+                users.push(newUser);
+                localStorage.setItem(usersStorageKey, JSON.stringify(users));
+                
+                alert('Account created successfully! Please sign in.');
+                
+                // Clear form and switch to sign in tab
+                createAccountForm.reset();
+                switchTab('signIn');
+                // Optionally pre-fill sign-in email
+                document.getElementById('signInEmail').value = email;
+            });
+
+            // --- Remove error message when user starts typing ---
+            const allInputs = document.querySelectorAll('.auth-form-section input');
+            allInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const formGroup = this.closest('.form-group');
+                    if (formGroup.classList.contains('error')) {
+                        formGroup.classList.remove('error');
+                    }
+                    hideAuthError(); // Hide general error on any input
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

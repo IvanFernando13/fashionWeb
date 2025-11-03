@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - FS Fashion Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Styles for the main account dashboard */
+        .account-main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 150px 20px 80px; 
+            min-height: calc(100vh - 300px); 
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-picture-placeholder {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            margin-right: 30px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #aaa;
+        }
+        .profile-picture-placeholder::before {
+            content: '👤'; /* Simple user icon */
+        }
+
+        .profile-info h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            color: #000;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            color: #555;
+            margin: 0;
+        }
+
+        .account-navigation {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .account-navigation li {
+            margin-bottom: 0; 
+            border-bottom: 1px solid #eee;
+        }
+        
+        .account-navigation li:last-child {
+            border-bottom: none; 
+        }
+
+        .account-navigation a {
+            font-size: 20px;
+            color: #000;
+            text-decoration: none;
+            display: block; 
+            transition: color 0.3s ease;
+            font-weight: 500;
+            padding: 20px 0; 
+        }
+
+        .account-navigation a:hover {
+            color: #555;
+        }
+
+        .account-navigation .sub-text {
+            display: block;
+            font-size: 16px;
+            color: #888;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+        
+        /* Updated header link style */
+        .utility-links .slash {
+            color: #000;
+            margin: 0 5px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .account-main-container {
+                padding: 120px 20px 60px;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .profile-picture-placeholder {
+                margin: 0 0 20px 0;
+            }
+        }
+        @media (max-width: 480px) {
+            .account-main-container {
+                padding: 100px 15px 40px;
+            }
+            .profile-picture-placeholder {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+            .profile-info h1 {
+                font-size: 24px;
+            }
+            .profile-info p {
+                font-size: 15px;
+            }
+            .account-navigation a {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<!-- Applying 'brands-page' class for white background --><body class="brands-page">
+
+    <!-- Header --><header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">FS</span>
+                </a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <li><a href="searchPage.html">Search</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="#games">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <a href="#bag" class="bag-link">Bag</a>
+                <div class="utility-links" id="header-utility-links">
+                    <!-- This part will be updated by script -->
+                    <a href="accountPage.html">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Account Dashboard --><main class="account-main-container">
+        <div class="profile-header">
+            <div class="profile-picture-placeholder"></div>
+            <div class="profile-info">
+                <!-- THESE IDs ARE THE TARGETS FOR THE SCRIPT -->
+                <h1 id="profileUsername">Username</h1>
+                <p id="profileEmail">email@gmail.com</p>
+            </div>
+        </div>
+
+        <ul class="account-navigation">
+            <li><a href="wishlistPage.html">Wishlist</a></li>
+            <li><a href="#">Voucher</a></li>
+            <li>
+                <a href="#">
+                    Transaction History
+                    <span class="sub-text">No transaction history yet.</span>
+                </a>
+            </li>
+            <li><a href="#" id="main-logout-link">Log Out</a></li>
+        </ul>
+    </main>
+
+    <!-- Footer --><footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li>Rick Owens</li>
+                    <li>Maison Margiela</li>
+                    <li>Balenciaga</li>
+                    <li>Vivienne Westwood</li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- UPDATED SCRIPT with session check and data population --><script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- SESSION GUARD ---
+            // Get user data string from session storage
+            const userString = sessionStorage.getItem('loggedInUser');
+            
+            if (!userString) {
+                // If no user string, no one is logged in. Redirect to login page.
+                alert('Please sign in to view your account.');
+                window.location.href = 'accountPage.html';
+                return; // Stop script execution
+            }
+
+            // --- Parse User Data ---
+            // We have a user string, so parse it into an object
+            const user = JSON.parse(userString);
+
+            // --- THIS IS THE FIX: Populate User Info ---
+            // Update the placeholder text with data from the user object
+            document.getElementById('profileUsername').textContent = user.username;
+            document.getElementById('profileEmail').textContent = user.email;
+            
+            // --- Update Header Link ---
+            // Change "Account" to "Username / Log Out"
+            const utilityLinks = document.getElementById('header-utility-links');
+            if (utilityLinks) {
+                utilityLinks.innerHTML = `
+                    <a href="accountMain.html" style="font-weight: bold;">${user.username}</a>
+                    <span class="slash">/</span>
+                    <a href="#" id="header-logout-link">Log Out</a>
+                `;
+            }
+
+            // --- Logout Functionality ---
+            function logout() {
+                sessionStorage.removeItem('loggedInUser');
+                alert('You have been logged out.');
+                window.location.href = 'accountPage.html'; // Redirect to login page
+            }
+            
+            // Add listeners to both logout links
+            const mainLogout = document.getElementById('main-logout-link');
+            if (mainLogout) {
+                mainLogout.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    logout();
+                });
+            }
+            
+            // This link is created by the script above, so we find it after
+            const headerLogout = document.getElementById('header-logout-link');
+            if (headerLogout) {
+                headerLogout.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    logout();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

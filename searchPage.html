@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - FS Fashion Marketplace</title>
+    <!-- Main stylesheet from your project -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts link from your other pages -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- New styles for the search bar -->
+    <style>
+        .search-page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Using the same padding as .product-page */
+            padding: 150px 60px 80px;
+            min-height: calc(100vh - 300px); /* Ensure footer isn't too high on empty page */
+        }
+
+        .search-title {
+            font-size: 24px; /* Smaller than page-title */
+            font-weight: 600;
+            color: #000000; /* Blue color from screenshot */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-bar-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-bottom: 2px solid #000; /* Underline from screenshot */
+            padding-bottom: 10px;
+            margin-bottom: 60px; /* Space between search and results */
+        }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            stroke: #000;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .search-input {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #000;
+            border: none;
+            outline: none;
+            width: 100%;
+            background-color: transparent;
+        }
+        
+        .search-input::placeholder {
+            color: #888;
+            font-weight: 300;
+        }
+
+        .clear-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 28px;
+            font-weight: 300;
+            color: #888;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 10px;
+            line-height: 1;
+        }
+        
+        .clear-btn:hover {
+            color: #000;
+        }
+
+        /* Responsive styles for search */
+        @media (max-width: 768px) {
+            .search-page-container {
+                padding: 120px 40px 60px;
+            }
+            .search-input {
+                font-size: 16px;
+            }
+            .search-bar-wrapper {
+                margin-bottom: 40px;
+            }
+        }
+        @media (max-width: 480px) {
+            .search-page-container {
+                padding: 100px 20px 40px;
+            }
+            .search-title {
+                font-size: 20px;
+            }
+            .search-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+        }
+    </style>
+</head>
+<!-- 
+    Using 'brands-page' class on the body to ensure
+    the white background and black text from styles.css is applied 
+-->
+<body class="brands-page">
+
+    <!-- Header (Copied from categoryPage.html) -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">FS</span>
+                </a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <!-- Updated Search link to point to this page -->
+                    <li><a href="searchPage.html">Search</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="#games">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <a href="#bag" class="bag-link">Bag</a>
+                <div class="utility-links">
+                    <a href="accountPage.html">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Search Section -->
+    <main class="search-page-container">
+        
+        <!-- New Search UI -->
+        <div class="search-container">
+            <h1 class="search-title">Search</h1>
+            <div class="search-bar-wrapper">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="What are you looking for?">
+                <button id="clearSearch" class="clear-btn" aria-label="Clear search">&times;</button>
+            </div>
+        </div>
+
+        <!-- 
+            Product Grid for Results
+            (Using structure from categoryPage.html)
+        -->
+        <section class="product-grid-wrapper">
+            <!-- Results will be injected here by JavaScript -->
+            <div class="product-grid" id="productGrid"></div>
+            <!-- Message for no results -->
+            <p id="noResultsMessage" style="display: none; text-align: center; color: #666; font-size: 18px; margin-top: 40px;">No products found.</p>
+        </section>
+
+    </main>
+
+    <!-- Footer (Copied from categoryPage.html) -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li>Rick Owens</li>
+                    <li>Maison Margiela</li>
+                    <li>Balenciaga</li>
+                    <li>Vivienne Westwood</li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product data from your project -->
+    <script src="products.js"></script>
+    
+    <!-- New JavaScript for search functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const clearButton = document.getElementById('clearSearch');
+            const productGrid = document.getElementById('productGrid');
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            
+            // Function to render the product grid
+            function renderProducts(products) {
+                // Clear previous results
+                productGrid.innerHTML = '';
+                
+                if (products.length === 0) {
+                    // Show "no results" message if grid is empty
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    // Hide "no results" message
+                    noResultsMessage.style.display = 'none';
+                    
+                    // Use the same product item HTML as your other pages
+                    productGrid.innerHTML = products.map(p => `
+                        <a href="productPage.html?id=${p.id}" class="product-item-link">
+                            <div class="product-item">
+                                <img src="${p.image || 'image/mainImage.jpeg'}" alt="${p.name}" class="product-image" onerror="this.src='image/mainImage.jpeg';">
+                                <div class="product-info">
+                                    <p class="product-name">${p.name}</p>
+                                    <p class="product-price">${p.price}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `).join('');
+                }
+            }
+
+            // Function to perform the search
+            function handleSearch() {
+                const allProducts = window.PRODUCTS || [];
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                // If search is empty, show nothing
+                if (searchTerm === '') {
+                    productGrid.innerHTML = '';
+                    noResultsMessage.style.display = 'none';
+                    return;
+                }
+
+                const filteredProducts = allProducts.filter(product => {
+                    const nameMatch = (product.name || '').toLowerCase().includes(searchTerm);
+                    const brandMatch = (product.brand || '').toLowerCase().includes(searchTerm);
+                    const categoryMatch = (product.category || '').toLowerCase().includes(searchTerm);
+                    
+                    return nameMatch || brandMatch || categoryMatch;
+                });
+
+                renderProducts(filteredProducts);
+            }
+
+            // Event Listeners
+            // Using 'input' to search as the user types
+            searchInput.addEventListener('input', handleSearch);
+
+            // Clear button functionality
+            clearButton.addEventListener('click', function() {
+                searchInput.value = '';
+                productGrid.innerHTML = '';
+                noResultsMessage.style.display = 'none';
+                searchInput.focus(); // Put cursor back in search bar
+            });
+
+            // Optional: Automatically focus the search bar on page load
+            searchInput.focus();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - FS Fashion Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .wishlist-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 150px 20px 80px; 
+            min-height: calc(100vh - 300px); 
+        }
+        .wishlist-container h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        /* Using the existing .product-grid styles for consistency */
+        .wishlist-items-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Re-using .product-grid layout */
+            gap: 30px;
+        }
+        .wishlist-empty-message {
+            text-align: center;
+            font-size: 20px;
+            color: #888;
+            padding: 50px 0;
+            grid-column: 1 / -1; /* Span all columns */
+        }
+        
+        /* Using existing product item styles from styles.css */
+        
+        /* Updated header link style */
+        .utility-links .slash {
+            color: #000;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            .wishlist-container {
+                padding: 120px 20px 60px;
+            }
+            .wishlist-container h1 {
+                font-size: 30px;
+            }
+            .wishlist-items-grid {
+                grid-template-columns: repeat(2, 1fr); /* Match .product-grid responsive */
+                gap: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .wishlist-container {
+                padding: 100px 15px 40px;
+            }
+            .wishlist-container h1 {
+                font-size: 26px;
+            }
+            .wishlist-items-grid {
+                grid-template-columns: 1fr; /* Match .product-grid responsive */
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<!-- Applying 'brands-page' class for white background --><body class="brands-page">
+
+    <!-- Header --><header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">FS</span>
+                </a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <li><a href="searchPage.html">Search</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="#games">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <a href="#bag" class="bag-link">Bag</a>
+                <div class="utility-links" id="header-utility-links">
+                    <!-- Links will be populated by script -->
+                    <a href="accountPage.html">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Wishlist Section --><main class="wishlist-container">
+        <a href="accountMain.html" class="back-link">← Back to My Account</a>
+        <h1>Your Wishlist</h1>
+        
+        <div class="wishlist-items-grid" id="wishlist-items-grid">
+            <!-- Wishlist items will be loaded here by JavaScript -->
+            <p class="wishlist-empty-message">Loading wishlist...</p>
+        </div>
+    </main>
+
+    <!-- Footer --><footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li>Rick Owens</li>
+                    <li>Maison Margiela</li>
+                    <li>Balenciaga</li>
+                    <li>Vivienne Westwood</li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include product data first --><script src="products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishlistGrid = document.getElementById('wishlist-items-grid');
+            const utilityLinks = document.getElementById('header-utility-links');
+            const userString = sessionStorage.getItem('loggedInUser');
+            const user = JSON.parse(userString);
+            
+            const usersStorageKey = 'fs_users'; // Key for localStorage
+            const allUsers = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+
+            // --- Update Header Links ---
+            if (user) {
+                utilityLinks.innerHTML = `
+                    <a href="accountMain.html" style="font-weight: bold;">${user.username}</a>
+                    <span class="slash">/</span>
+                    <a href="#" id="header-logout-link">Log Out</a>
+                `;
+                
+                // Add logout listener
+                const headerLogout = document.getElementById('header-logout-link');
+                if (headerLogout) {
+                    headerLogout.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        sessionStorage.removeItem('loggedInUser');
+                        alert('You have been logged out.');
+                        window.location.href = 'accountPage.html';
+                    });
+                }
+            } else {
+                utilityLinks.innerHTML = '<a href="accountPage.html">Account</a>';
+                // If not logged in, redirect
+                alert('Please sign in to view your wishlist.');
+                window.location.href = 'accountPage.html';
+                return;
+            }
+
+            // --- Load Wishlist Items ---
+            // Find the full user object from localStorage to get the wishlist
+            const currentUserData = allUsers.find(u => u.email === user.email);
+            
+            if (!currentUserData) {
+                wishlistGrid.innerHTML = '<p class="wishlist-empty-message">Error: Could not find user data.</p>';
+                return;
+            }
+
+            const wishlistedProductIds = currentUserData.wishlist || [];
+            
+            // Ensure products.js is loaded
+            if (typeof window.PRODUCTS === 'undefined' || window.PRODUCTS.length === 0) {
+                wishlistGrid.innerHTML = '<p class="wishlist-empty-message">Could not load product data.</p>';
+                return;
+            }
+
+            if (wishlistedProductIds.length > 0) {
+                wishlistGrid.innerHTML = ''; // Clear empty message
+                const wishlistedProducts = window.PRODUCTS.filter(product => wishlistedProductIds.includes(product.id));
+                
+                if (wishlistedProducts.length > 0) {
+                    wishlistedProducts.forEach(product => {
+                        // Create product card using the same structure as category/brand pages
+                        const productLink = document.createElement('a');
+                        productLink.href = `productPage.html?id=${product.id}`;
+                        productLink.className = 'product-item-link';
+                        
+                        productLink.innerHTML = `
+                            <div class="product-item">
+                                <img src="${product.image || 'image/mainImage.jpeg'}" alt="${product.name}" class="product-image">
+                                <div class="product-info">
+                                    <p class="product-name">${product.name}</p>
+                                    <p class="product-price">${product.price}</p>
+                                </div>
+                            </div>
+                        `;
+                        wishlistGrid.appendChild(productLink);
+                    });
+                } else {
+                    wishlistGrid.innerHTML = '<p class="wishlist-empty-message">Your Wishlist is empty.</p>';
+                }
+            } else {
+                wishlistGrid.innerHTML = '<p class="wishlist-empty-message">Your Wishlist is empty.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
+
