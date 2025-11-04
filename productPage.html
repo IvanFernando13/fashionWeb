@@ -6,121 +6,10 @@
     <title>Product - FS Fashion Marketplace</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-    /* Scoped slider styles */
-    .slider { position: relative; }
-    .slider-viewport { overflow: hidden; width: 100%; }
-    .slides { display: flex; }
-    .product-detail-image { width: 100%; height: auto; display: block; object-fit: contain; }
-    .slider-btn { 
-        position: absolute; 
-        top: 50%; 
-        transform: translateY(-50%); 
-        background: rgba(0,0,0,0.45);
-        color: #fff; 
-        border: none; 
-        width: 48px; 
-        height: 48px; 
-        border-radius: 9999px; 
-        font-size: 26px; 
-        line-height: 48px; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        cursor: pointer; 
-        transition: background 150ms ease;
-    }
-    .slider-btn:hover { background: rgba(0,0,0,0.6); }
-    #sliderPrev { left: 10px; }
-    #sliderNext { right: 10px; }
-    
-    /* Wishlist button active state */
-    .wishlist-btn.active {
-        background-color: #f0f0f0;
-        border-color: #aaa;
-        color: #000;
-    }
-    
-    /* Header link styles */
-    .utility-links .slash {
-            color: #000;
-            margin: 0 5px;
-    }
-    
-    /* NEW Size Selector Styles */
-    .size-selector {
-        margin-top: 20px;
-    }
-    .size-selector-label {
-        font-size: 16px;
-        font-weight: 600;
-        color: #000;
-        margin-bottom: 10px;
-        display: block;
-    }
-    .size-options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .size-btn {
-        min-width: 50px;
-        height: 50px;
-        padding: 0 15px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        color: #000;
-        font-size: 16px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    .size-btn:hover {
-        border-color: #000;
-    }
-    .size-btn.selected {
-        background-color: #000;
-        color: #fff;
-        border-color: #000;
-    }
-    .size-error {
-        color: red;
-        font-size: 14px;
-        margin-top: 15px;
-        display: none; /* Hidden by default */
-    }
-
-    /* Cart count indicator */
-    .bag-link {
-        position: relative;
-    }
-    #cart-count {
-        position: absolute;
-        top: -10px;
-        right: -15px;
-        background-color: #000;
-        color: #fff;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 500;
-    }
-    #cart-count:empty {
-        display: none;
-    }
-
-    @media (min-width: 768px) {
-        .slider-btn { width: 56px; height: 56px; font-size: 30px; line-height: 56px; }
-        #sliderPrev { left: 14px; }
-        #sliderNext { right: 14px; }
-    }
-    </style>
+   
 </head>
 <body class="brands-page">
-    <!-- Header --><header class="header">
+    <header class="header">
         <div class="header-container">
             <div class="logo">
                 <a href="index.html" class="logo-link">
@@ -133,21 +22,21 @@
                     <li><a href="brandsPage.html">Brands</a></li>
                     <li><a href="searchPage.html">Search</a></li>
                     <li><a href="inspirationPage.html">Inspiration</a></li>
-                    <li><a href="#games">Games</a></li>
+                    <li><a href="games.html">Games</a></li>
                 </ul>
             </nav>
             <div class="right-actions">
-                <!-- Updated Bag link -->
+               
                 <a href="bagPage.html" class="bag-link">Bag <span id="cart-count"></span></a>
                 <div class="utility-links" id="header-utility-links">
-                    <!-- This part will be updated by script -->
+                   
                     <a href="accountPage.html">Account</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Product Detail Section -->
+    
     <section class="product-detail-page">
         <a href="javascript:history.back()" class="back-link">← Back to Products</a>
         
@@ -169,11 +58,11 @@
                     Product description goes here. This is where detailed information about the product will be displayed.
                 </p>
                 
-                <!-- NEW Size Selector -->
+                
                 <div class="size-selector" id="size-selector-container">
                     <label class="size-selector-label">Size</label>
                     <div class="size-options" id="size-options">
-                        <!-- Size buttons will be injected here -->
+                        
                     </div>
                     <p class="size-error" id="size-error">Please select a size.</p>
                 </div>
@@ -201,15 +90,15 @@
         </div>
     </section>
 
-    <!-- Footer --><footer class="footer">
+    <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
                 <h3>Brands</h3>
                 <ul>
-                    <li>Rick Owens</li>
-                    <li>Maison Margiela</li>
-                    <li>Balenciaga</li>
-                    <li>Vivienne Westwood</li>
+                    <li><a href="brandPage.html?brand=Rick%20Owens">Rick Owens</a></li>
+                    <li><a href="brandPage.html?brand=Maison%20Margiela">Maison Margiela</a></li>
+                    <li><a href="brandPage.html?brand=Balenciaga">Balenciaga</a></li>
+                    <li><a href="brandPage.html?brand=Vivienne%20Westwood">Vivienne Westwood</a></li>
                     <li><a href="brandsPage.html">Other Brands</a></li>
                 </ul>
             </div>
@@ -227,9 +116,7 @@
 
     <script src="products.js"></script>
     <script>
-        // --- START OF UPDATED SCRIPT ---
         
-        // --- GLOBAL VARS ---
         const params = new URLSearchParams(window.location.search);
         const productId = params.get('id');
         const usersStorageKey = 'fs_users';
@@ -238,7 +125,7 @@
         let selectedSize = null;
         let currentProduct = null;
 
-        // --- Helper: Update Cart Count in Header ---
+        
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -248,7 +135,7 @@
             }
         }
 
-        // --- HEADER SCRIPT ---
+       
         function setupHeader() {
             const utilityLinks = document.getElementById('header-utility-links');
             if (user) {
@@ -269,10 +156,10 @@
             } else {
                 utilityLinks.innerHTML = '<a href="accountPage.html">Account</a>';
             }
-            updateCartCount(); // Update cart count on load
+            updateCartCount(); 
         }
 
-        // --- PRODUCT PAGE SCRIPT ---
+        
         function renderNotFound() {
             document.getElementById('productName').textContent = 'Product Not Found';
             document.getElementById('productPrice').textContent = '';
@@ -284,20 +171,21 @@
             document.querySelector('.add-to-cart-btn').disabled = true;
         }
         
-        // --- UPDATED: Size Option Generator ---
+        
         function generateSizeOptions(product) {
             const sizeString = product.size || "One Size";
             const sizeContainer = document.getElementById('size-options');
             let options = [];
 
-            // NEW LOGIC:
-            if (sizeString.match(/^\d+-\d+$/)) { // e.g., "39-42"
-                const [start, end] = sizeString.split('-').map(Number);
+            
+            if (sizeString.match(/^EU \d+-\d+$/)) { 
+                const range = sizeString.split(' ')[1]; 
+                const [start, end] = range.split('-').map(Number);
                 for (let i = start; i <= end; i++) {
                     options.push(i.toString());
                 }
-            } else if (sizeString.match(/^[A-Z]+-[A-Z]+$/)) { // e.g., "XS-XL"
-                const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']; // Base sizes
+            } else if (sizeString.match(/^[A-Z]+-[A-Z]+$/)) { 
+                const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']; 
                 const [startSize, endSize] = sizeString.split('-');
                 const startIndex = sizes.indexOf(startSize);
                 const endIndex = sizes.indexOf(endSize);
@@ -305,13 +193,13 @@
                 if (startIndex !== -1 && endIndex !== -1) {
                     options = sizes.slice(startIndex, endIndex + 1);
                 } else {
-                    options = [sizeString]; // Fallback if range is invalid
+                    options = [sizeString]; 
                 }
-            } else { // Default/Fallback for "One Size", "all size", etc.
-                options = [sizeString]; // Use the string itself, e.g., "One Size"
+            } else { 
+                options = [sizeString]; 
             }
             
-            // This part of the logic remains the same
+            
             if (options.length === 0) {
                  document.getElementById('size-selector-container').style.display = 'none';
                  return;
@@ -321,7 +209,7 @@
                 `<button class="size-btn" data-size="${size}">${size}</button>`
             ).join('');
             
-            // Add click listeners to new size buttons
+            
             sizeContainer.querySelectorAll('.size-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     sizeContainer.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
@@ -331,7 +219,7 @@
                 });
             });
             
-            // Pre-select if it's the only option (e.g., "One Size")
+            
             if (options.length === 1) {
                  sizeContainer.querySelector('.size-btn').classList.add('selected');
                  selectedSize = options[0];
@@ -356,14 +244,13 @@
             document.getElementById('productBrand').textContent = currentProduct.brand;
             document.getElementById('productMaterial').textContent = currentProduct.material;
             
-            // Update the spec size display to use the new standardized size
+            
             document.getElementById('productSize').textContent = currentProduct.size; 
             
-            // --- Generate Size Options ---
-            // Pass the whole product object
+            
             generateSizeOptions(currentProduct); 
             
-            // --- Image Slider Logic ---
+            
             const images = Array.isArray(currentProduct.images) && currentProduct.images.length > 0
                 ? currentProduct.images
                 : [currentProduct.image || 'image/mainImage.jpeg'];
@@ -406,32 +293,32 @@
                 slide.style.minWidth = '100%';
             });
             updateSlider();
-            // --- End Image Slider Logic ---
+            
 
             document.title = currentProduct.name + ' - FS Fashion Marketplace';
 
-            // --- UPDATED Add to Cart Logic ---
+            
             document.getElementById('add-to-cart-btn').addEventListener('click', function() {
-                // 1. Check if size is selected
+                
                 if (!selectedSize) {
                     document.getElementById('size-error').style.display = 'block';
                     return;
                 }
                 
-                // 2. Get cart from localStorage
+                
                 let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
                 
-                // 3. Create a unique ID for this item (product ID + size)
+                
                 const uniqueItemId = `${currentProduct.id}_${selectedSize}`;
                 
-                // 4. Check if item with this unique ID is already in cart
+                
                 const existingItemIndex = cart.findIndex(item => item.uniqueId === uniqueItemId);
                 
                 if (existingItemIndex > -1) {
-                    // Item already in cart, increment quantity
+                    
                     cart[existingItemIndex].quantity += 1;
                 } else {
-                    // Item not in cart, add as new item
+                    
                     cart.push({
                         id: currentProduct.id,
                         uniqueId: uniqueItemId,
@@ -443,17 +330,17 @@
                     });
                 }
                 
-                // 5. Save updated cart to localStorage
+                
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 
-                // 6. Give user feedback
+                
                 alert('Added to Bag: ' + currentProduct.name + ' (Size: ' + selectedSize + ')');
                 
-                // 7. Update header cart count
+                
                 updateCartCount();
             });
 
-            // --- WISHLIST LOGIC ---
+            
             const wishlistBtn = document.getElementById('wishlist-btn');
             
             function getWishlist() {
@@ -505,13 +392,11 @@
                 saveWishlist(wishlist);
                 updateWishlistButton();
             });
-            // --- END WISHLIST LOGIC ---
+            
         }
 
-        // --- RUN SCRIPT ---
         setupHeader();
         loadProductDetail();
     </script>
 </body>
 </html>
-

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vouchers - FS Fashion Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="brands-page">
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">FS</span>
+                </a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <li><a href="searchPage.html">Search</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="games.html">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <a href="bagPage.html" class="bag-link">Bag <span id="cart-count"></span></a>
+                <div class="utility-links" id="header-utility-links">
+                    <a href="accountPage.html">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="voucher-container">
+        <a href="accountMain.html" class="back-link">← Back to My Account</a>
+        <h1>My Vouchers</h1>
+        
+        <div class="voucher-list" id="voucher-list">
+            <p class="voucher-empty-message" id="voucher-message">Loading vouchers...</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li><a href="brandPage.html?brand=Rick%20Owens">Rick Owens</a></li>
+                    <li><a href="brandPage.html?brand=Maison%20Margiela">Maison Margiela</a></li>
+                    <li><a href="brandPage.html?brand=Balenciaga">Balenciaga</a></li>
+                    <li><a href="brandPage.html?brand=Vivienne%20Westwood">Vivienne Westwood</a></li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const voucherList = document.getElementById('voucher-list');
+            const voucherMessage = document.getElementById('voucher-message');
+            
+            const usersStorageKey = 'fs_users';
+            const cartKey = 'fs_cart';
+            
+            
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const countEl = document.getElementById('cart-count');
+                if (countEl) {
+                    countEl.textContent = count > 0 ? count : '';
+                }
+            }
+
+            
+            function setupHeader(user) {
+                const utilityLinks = document.getElementById('header-utility-links');
+                if (user) {
+                    utilityLinks.innerHTML = `
+                        <a href="accountMain.html" style="font-weight: bold;">${user.username}</a>
+                        <span class="slash">/</span>
+                        <a href="#" id="header-logout-link">Log Out</a>
+                    `;
+                    
+                    const headerLogout = document.getElementById('header-logout-link');
+                    if (headerLogout) {
+                        headerLogout.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            sessionStorage.removeItem('loggedInUser');
+                            alert('You have been logged out.');
+                            window.location.href = 'accountPage.html';
+                        });
+                    }
+                } else {
+                    utilityLinks.innerHTML = '<a href="accountPage.html">Account</a>';
+                }
+                updateCartCount();
+            }
+
+            
+            const userString = sessionStorage.getItem('loggedInUser');
+            if (!userString) {
+                alert('Please sign in to view your vouchers.');
+                window.location.href = 'accountPage.html';
+                return;
+            }
+            
+            const user = JSON.parse(userString);
+            setupHeader(user); 
+
+            
+            const allUsers = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+            const currentUserData = allUsers.find(u => u.email === user.email);
+
+            if (!currentUserData) {
+                voucherMessage.textContent = 'Error: Could not find user data.';
+                return;
+            }
+
+            
+            const vouchers = currentUserData.discountVouchers || [];
+            
+            if (vouchers.length === 0) {
+                voucherMessage.textContent = 'You have no vouchers.';
+            } else {
+                voucherMessage.style.display = 'none'; 
+                
+                let htmlString = '';
+                
+                vouchers.sort((a, b) => new Date(b.dateWon) - new Date(a.dateWon));
+
+                vouchers.forEach(voucher => {
+                    const statusText = voucher.used ? 'Used' : 'Available';
+                    const statusClass = voucher.used ? 'used' : 'available';
+                    
+                    htmlString += `
+                        <div class="voucher-item ${statusClass}">
+                            <div class="voucher-percent">${voucher.percent}%</div>
+                            <div class="voucher-details">
+                                <span class="voucher-code">CODE: ${voucher.code}</span>
+                                <span class="voucher-status">Status: ${statusText}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                voucherList.innerHTML = htmlString;
+            }
+        });
+    </script>
+</body>
+</html>

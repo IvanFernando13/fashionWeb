@@ -1,8 +1,6 @@
-// Simple in-memory product catalog for the detail page
-// In a real app this would come from an API or database
 
 window.PRODUCTS = [
-    // TOPS (12 products)
+    
     {
         id: "101",
         name: "Stussy Waffle Cashmere Zip Hood Sweater",
@@ -98,7 +96,7 @@ window.PRODUCTS = [
         category: "tops"
     },
     
-    // OUTERWEAR (12 products)
+    
     {
         id: "201",
         name: "Carhartt WIP Harvey Shirt Jacket",
@@ -260,7 +258,7 @@ window.PRODUCTS = [
         category: "outerwear"
     },
 
-    // BOTTOMS (12 products)
+    // BOTTOMS 
     {
         id: "301",
         name: "Kapital Chino High Waisted NIME Pants",
@@ -439,7 +437,7 @@ window.PRODUCTS = [
         category: "bottoms"
     },
     
-    // ACCESSORIES (12+ products)
+    // ACCESSORIES 
     {
         id: "401",
         name: "Carhartt WIP Short Watch Hat",

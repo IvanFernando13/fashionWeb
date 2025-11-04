@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FS Fashion Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="brands-page payment-page">
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">FS</span>
+                </a>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="categoryPage.html">Shop</a></li>
+                    <li><a href="brandsPage.html">Brands</a></li>
+                    <li><a href="searchPage.html">Search</a></li>
+                    <li><a href="inspirationPage.html">Inspiration</a></li>
+                    <li><a href="games.html">Games</a></li>
+                </ul>
+            </nav>
+            <div class="right-actions">
+                <a href="bagPage.html" class="bag-link">Bag <span id="cart-count"></span></a>
+                <div class="utility-links" id="header-utility-links">
+                    <a href="accountPage.html">Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="payment-container">
+        
+        <div class="payment-details-left">
+            
+            <section class="checkout-section">
+                <h2>Contact</h2>
+                <div class="checkout-form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="checkout-input" placeholder="Your email address" required>
+                </div>
+            </section>
+            
+            <section class="checkout-section">
+                <h2>Shipping Address</h2>
+                <div class="checkout-radio-group">
+                    <input type="radio" id="address-1" name="shipping-address" value="address1" checked>
+                    <label for="address-1">
+                        <span>Address 1 (Home)</span>
+                        <span class="radio-price">Jln. Mawar No. 1, Jakarta</span>
+                    </label>
+                </div>
+                <div class="checkout-radio-group">
+                    <input type="radio" id="address-2" name="shipping-address" value="address2">
+                    <label for="address-2">
+                        <span>Address 2 (Work)</span>
+                        <span class="radio-price">Gedung ABC, Jln. Sudirman No. 2, Jakarta</span>
+                    </label>
+                </div>
+            </section>
+            
+            <section class="checkout-section">
+                <h2>Shipping Method</h2>
+                <div class="checkout-radio-group">
+                    <input type="radio" id="shipping-default" name="shipping-method" value="10.00" checked>
+                    <label for="shipping-default">
+                        <span>Standard Shipping</span>
+                        <span class="radio-price" id="shipping-price-display">$10.00</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="checkout-section">
+                <h2>Payment</h2>
+                <p class="payment-info-text">All transactions are secure and encrypted.</p>
+                <div class="checkout-radio-group payment-method">
+                    <input type="radio" id="payment-card" name="payment-method" value="card" checked>
+                    <label for="payment-card">
+                        <span>Credit Card</span>
+                    </label>
+                </div>
+                <div class="checkout-radio-group payment-method">
+                    <input type="radio" id="payment-gopay" name="payment-method" value="gopay">
+                    <label for="payment-gopay">
+                        <span>GoPay</span>
+                    </label>
+                </div>
+                <div class="checkout-radio-group payment-method">
+                    <input type="radio" id="payment-transfer" name="payment-method" value="transfer">
+                    <label for="payment-transfer">
+                        <span>Bank Transfer</span>
+                    </label>
+                </div>
+            </section>
+
+            <button class="pay-now-btn" id="pay-now-btn">Pay Now</button>
+        </div>
+
+        <aside class="order-summary-right">
+            
+            <div id="summary-items-list" class="summary-items-list">
+                </div>
+
+            <div class="voucher-apply-section">
+                <div class="checkout-form-group">
+                    <select id="voucher-select" class="checkout-input">
+                        </select>
+                    <p id="voucher-message" class="voucher-message"></p>
+                </div>
+            </div>
+            
+            <div id="summary-totals" class="summary-totals">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span id="summary-shipping">$10.00</span>
+                </div>
+                <div class="summary-row" id="discount-row" style="display: none;">
+                    <span>Discount</span>
+                    <span id="summary-discount" style="color: green;">-$0.00</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <span id="summary-total">$0.00</span>
+                </div>
+            </div>
+            
+        </aside>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Brands</h3>
+                <ul>
+                    <li><a href="brandPage.html?brand=Rick%20Owens">Rick Owens</a></li>
+                    <li><a href="brandPage.html?brand=Maison%20Margiela">Maison Margiela</a></li>
+                    <li><a href="brandPage.html?brand=Balenciaga">Balenciaga</a></li>
+                    <li><a href="brandPage.html?brand=Vivienne%20Westwood">Vivienne Westwood</a></li>
+                    <li><a href="brandsPage.html">Other Brands</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Category</h3>
+                <ul>
+                    <li><a href="categoryPage.html?category=tops">Tops</a></li>
+                    <li><a href="categoryPage.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="categoryPage.html?category=bottoms">Bottoms</a></li>
+                    <li><a href="categoryPage.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartKey = 'fs_cart';
+            const usersStorageKey = 'fs_users';
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
+            const itemsListEl = document.getElementById('summary-items-list');
+            const subtotalEl = document.getElementById('summary-subtotal');
+            const shippingEl = document.getElementById('summary-shipping');
+            const totalEl = document.getElementById('summary-total');
+            const discountRow = document.getElementById('discount-row');
+            const discountEl = document.getElementById('summary-discount');
+            
+            
+            const voucherSelect = document.getElementById('voucher-select');
+            const voucherMsg = document.getElementById('voucher-message');
+            
+            const payBtn = document.getElementById('pay-now-btn');
+            const emailInput = document.getElementById('email');
+            const shippingPriceEl = document.getElementById('shipping-price-display');
+
+            let subtotal = 0;
+            let shipping = 10.00; 
+            let currentDiscountPercent = 0; 
+            let appliedVoucherCode = null;
+            let currentUserData = null; 
+
+            
+            function parsePrice(priceString) {
+                if (!priceString) return 0;
+                return parseFloat(priceString.replace(/[^0-9.]/g, '')) || 0;
+            }
+            
+            function formatPrice(price) {
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
+            }
+
+            function updateCartCount() {
+                const cartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+                const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+                const countEl = document.getElementById('cart-count');
+                if (countEl) {
+                    countEl.textContent = count > 0 ? count : '';
+                }
+            }
+
+            function setupHeader() {
+                const utilityLinks = document.getElementById('header-utility-links');
+                if (loggedInUser) {
+                    utilityLinks.innerHTML = `
+                        <a href="accountMain.html" style="font-weight: bold;">${loggedInUser.username}</a>
+                        <span class="slash">/</span>
+                        <a href="#" id="header-logout-link">Log Out</a>
+                    `;
+                    document.getElementById('header-logout-link').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        sessionStorage.removeItem('loggedInUser');
+                        alert('You have been logged out.');
+                        window.location.href = 'accountPage.html';
+                    });
+                    
+                    
+                    emailInput.value = loggedInUser.email;
+                    emailInput.disabled = true;
+                } else {
+                    utilityLinks.innerHTML = '<a href="accountPage.html">Account</a>';
+                }
+            }
+
+            
+            function renderOrderSummary() {
+                const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                if (cart.length === 0) {
+                    itemsListEl.innerHTML = '<p style="color: #555; font-size: 14px;">Your bag is empty.</p>';
+                    payBtn.disabled = true;
+                    return;
+                }
+
+                itemsListEl.innerHTML = '';
+                subtotal = 0;
+
+                cart.forEach(item => {
+                    const price = parsePrice(item.price);
+                    const itemTotal = price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'summary-item';
+                    itemEl.innerHTML = `
+                        <div class="summary-item-image-wrapper">
+                            <img src="${item.image || 'image/mainImage.jpeg'}" alt="${item.name}" class="summary-item-image">
+                        </div>
+                        <div class="summary-item-details">
+                            <span class="summary-item-name">${item.name}</span>
+                            <span class="summary-item-size">Size: ${item.size}</span>
+                        </div>
+                        <span class="summary-item-price">${formatPrice(itemTotal)}</span>
+                    `;
+                    itemsListEl.appendChild(itemEl);
+                });
+
+                updateTotals();
+            }
+            
+            
+            function updateTotals() {
+                const discountAmount = subtotal * (currentDiscountPercent / 100);
+                
+                const total = Math.max(0, subtotal - discountAmount + shipping);
+
+                subtotalEl.textContent = formatPrice(subtotal);
+                shippingEl.textContent = formatPrice(shipping);
+                shippingPriceEl.textContent = formatPrice(shipping);
+                
+                if (discountAmount > 0) {
+                    discountEl.textContent = `-${formatPrice(discountAmount)}`;
+                    discountRow.style.display = 'flex';
+                } else {
+                    discountRow.style.display = 'none';
+                }
+                
+                totalEl.textContent = formatPrice(total);
+            }
+
+            
+            function loadAvailableVouchers() {
+                if (!loggedInUser) {
+                    voucherSelect.innerHTML = `<option value="" disabled selected>Log in to see vouchers</option>`;
+                    voucherSelect.disabled = true;
+                    return;
+                }
+
+                
+                const allUsers = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+                currentUserData = allUsers.find(u => u.email === loggedInUser.email); 
+
+                if (!currentUserData || !currentUserData.discountVouchers) {
+                    voucherSelect.innerHTML = `<option value="" disabled selected>No vouchers available</option>`;
+                    voucherSelect.disabled = true;
+                    return;
+                }
+
+                
+                const availableVouchers = currentUserData.discountVouchers.filter(v => !v.used);
+
+                if (availableVouchers.length === 0) {
+                    voucherSelect.innerHTML = `<option value="" disabled selected>No vouchers available</option>`;
+                    voucherSelect.disabled = true;
+                    return;
+                }
+
+                
+                let optionsHTML = `<option value="" selected>Select a voucher...</option>`;
+                availableVouchers.forEach(voucher => {
+                    optionsHTML += `<option value="${voucher.code}">${voucher.percent}% Discount (${voucher.code})</option>`;
+                });
+                voucherSelect.innerHTML = optionsHTML;
+                voucherSelect.disabled = false;
+            }
+
+            
+            voucherSelect.addEventListener('change', function(event) {
+                const selectedCode = event.target.value;
+                voucherMsg.textContent = ""; 
+
+                if (!selectedCode) {
+                    
+                    currentDiscountPercent = 0;
+                    appliedVoucherCode = null;
+                    updateTotals();
+                    return;
+                }
+
+                
+                const voucher = currentUserData.discountVouchers.find(v => v.code === selectedCode);
+
+                if (voucher && !voucher.used) {
+                    
+                    currentDiscountPercent = voucher.percent;
+                    appliedVoucherCode = voucher.code;
+                    voucherMsg.textContent = `Applied ${voucher.percent}% discount!`;
+                    voucherMsg.style.color = "green";
+                    voucherSelect.disabled = true; 
+                    updateTotals();
+                } else {
+                    
+                    voucherMsg.textContent = "Selected voucher is invalid.";
+                    voucherMsg.style.color = "red";
+                    currentDiscountPercent = 0;
+                    appliedVoucherCode = null;
+                    updateTotals();
+                }
+            });
+
+            
+            payBtn.addEventListener('click', function() {
+                
+                const email = emailInput.value;
+                const shippingAddress = document.querySelector('input[name="shipping-address"]:checked');
+                const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+
+                if (!email || !shippingAddress || !paymentMethod) {
+                    alert('Please make sure you have provided an email and selected a shipping address and payment method.');
+                    return;
+                }
+                
+                
+                const cartItemsForOrder = JSON.parse(localStorage.getItem(cartKey)) || [];
+                let allUsers = JSON.parse(localStorage.getItem(usersStorageKey)) || [];
+                let userIndex = -1;
+
+                if (loggedInUser) {
+                    userIndex = allUsers.findIndex(u => u.email === loggedInUser.email);
+                }
+
+                
+                if (userIndex !== -1 && cartItemsForOrder.length > 0) {
+                    const discountAmount = subtotal * (currentDiscountPercent / 100);
+                    const finalTotal = Math.max(0, subtotal - discountAmount + shipping);
+
+                    const newOrder = {
+                        orderId: `FS-${Date.now().toString().slice(-8)}`,
+                        date: new Date().toISOString(),
+                        items: cartItemsForOrder,
+                        totalAmount: finalTotal,
+                        status: 'Delivered' 
+                    };
+                    
+                    if (!Array.isArray(allUsers[userIndex].transactions)) {
+                        allUsers[userIndex].transactions = [];
+                    }
+                    
+                    allUsers[userIndex].transactions.unshift(newOrder); 
+                    
+                    
+                    if (typeof allUsers[userIndex].gameVouchers === 'undefined') {
+                        allUsers[userIndex].gameVouchers = 0;
+                    }
+                    allUsers[userIndex].gameVouchers += 1;
+                    
+                }
+
+                
+                if (appliedVoucherCode && userIndex !== -1) {
+                    let voucherIndex = allUsers[userIndex].discountVouchers.findIndex(v => v.code === appliedVoucherCode);
+                    if (voucherIndex !== -1) {
+                        allUsers[userIndex].discountVouchers[voucherIndex].used = true;
+                    }
+                }
+                
+                
+                if (userIndex !== -1) {
+                     localStorage.setItem(usersStorageKey, JSON.stringify(allUsers));
+                }
+                
+                
+                localStorage.removeItem(cartKey);
+                
+                
+                alert('Payment successful! Your order is confirmed. You have received 1 game voucher!');
+                updateCartCount();
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            });
+
+            
+            setupHeader();
+            updateCartCount();
+            renderOrderSummary();
+            loadAvailableVouchers(); 
+        });
+    </script>
+</body>
+</html>

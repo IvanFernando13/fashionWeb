@@ -4,274 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bag - FS Fashion Marketplace</title>
-    <!-- Main stylesheet --><link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles for Bag Page --><style>
-        .bag-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 150px 40px 80px;
-            min-height: calc(100vh - 300px);
-        }
-
-        /* Empty Bag Styles (from image_02b927.png) */
-        .bag-empty-container {
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 100px 0;
-        }
-        .bag-empty-container.visible {
-            display: flex;
-        }
-        .empty-bag-image {
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
-            margin-bottom: 30px;
-            filter: invert(0.8);
-        }
-        .empty-bag-message {
-            font-size: 20px;
-            color: #555;
-            margin-bottom: 40px;
-        }
-        .continue-shopping-btn {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            padding: 15px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .continue-shopping-btn:hover {
-            background-color: #333;
-        }
-
-        /* Bag with Items Styles (from image_02b8c9.png) */
-        .bag-content-container {
-            display: none; /* Hidden by default */
-            grid-template-columns: 2fr 1fr;
-            gap: 60px;
-        }
-        .bag-content-container.visible {
-            display: grid;
-        }
-
-        .bag-items {
-            width: 100%;
-        }
-        
-        .bag-item {
-            display: flex;
-            gap: 20px;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        .bag-item-image {
-            width: 120px;
-            height: 150px;
-            object-fit: cover;
-            background-color: #f5f5f5;
-        }
-        .bag-item-details {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-        }
-        .bag-item-name {
-            font-size: 18px;
-            font-weight: 500;
-            color: #000;
-            text-decoration: none;
-        }
-        .bag-item-name:hover {
-            opacity: 0.7;
-        }
-        .bag-item-prop {
-            font-size: 16px;
-            color: #555;
-            text-transform: capitalize;
-        }
-        
-        .bag-item-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: auto;
-        }
-        .quantity-control {
-            display: flex;
-            border: 1px solid #ccc;
-        }
-        .quantity-btn {
-            background: #f5f5f5;
-            border: none;
-            width: 30px;
-            height: 30px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .quantity-display {
-            width: 40px;
-            height: 30px;
-            text-align: center;
-            font-size: 16px;
-            border: none;
-            padding: 0 5px;
-        }
-        .delete-item-btn {
-            background: none;
-            border: none;
-            color: #555;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .bag-item-price {
-            font-size: 18px;
-            font-weight: 600;
-            color: #000;
-            margin-left: auto;
-        }
-        
-        .empty-cart-btn {
-            background: none;
-            border: none;
-            color: #555;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            display: block;
-        }
-
-        /* Summary Box */
-        .bag-summary {
-            background-color: #f9f9f9;
-            padding: 30px;
-            height: fit-content;
-        }
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-        .summary-row span:first-child {
-            color: #555;
-        }
-        .summary-row span:last-child {
-            color: #000;
-            font-weight: 500;
-        }
-        .summary-total {
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-        .summary-total span {
-            font-size: 24px;
-            font-weight: 600;
-            color: #000;
-        }
-        .summary-info {
-            font-size: 14px;
-            color: #888;
-            text-align: right;
-            margin-top: -10px;
-            margin-bottom: 30px;
-        }
-        
-        .checkout-btn {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 15px;
-            transition: background-color 0.3s ease;
-        }
-        .checkout-btn:hover {
-            background-color: #333;
-        }
-        
-        .continue-shopping-btn-outline {
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #000;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.3s ease;
-        }
-        .continue-shopping-btn-outline:hover {
-            background-color: #f5f5f5;
-        }
-        
-        /* Header Cart Count */
-        .bag-link {
-            position: relative;
-        }
-        #cart-count {
-            position: absolute;
-            top: -10px;
-            right: -15px;
-            background-color: #000;
-            color: #fff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-        }
-        #cart-count:empty {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .bag-container {
-                padding: 120px 20px 60px;
-            }
-            .bag-content-container {
-                grid-template-columns: 1fr;
-            }
-            .bag-summary {
-                margin-top: 40px;
-            }
-            .bag-item {
-                flex-direction: column;
-            }
-            .bag-item-price {
-                margin-left: 0;
-                margin-top: 10px;
-                text-align: right;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<!-- Using 'brands-page' class for white background --><body class="brands-page">
 
-    <!-- Header --><header class="header">
+<body class="brands-page">
+
+    <header class="header">
         <div class="header-container">
             <div class="logo">
                 <a href="index.html" class="logo-link">
@@ -284,7 +23,7 @@
                     <li><a href="brandsPage.html">Brands</a></li>
                     <li><a href="searchPage.html">Search</a></li>
                     <li><a href="inspirationPage.html">Inspiration</a></li>
-                    <li><a href="#games">Games</a></li>
+                    <li><a href="games.html">Games</a></li>
                 </ul>
             </nav>
             <div class="right-actions">
@@ -296,19 +35,16 @@
         </div>
     </header>
 
-    <!-- Main Bag Content --><main class="bag-container">
+    <main class="bag-container">
     
-        <!-- Empty Bag -->
         <div class="bag-empty-container" id="bag-empty">
-            <img src="httpsStorage-PlaceHolder-Url-For-image_02b927.png" alt="Empty Bag" class="empty-bag-image">
+            <img src="image/emptyBag.png" alt="Empty Bag" class="empty-bag-image">
             <p class="empty-bag-message">There are currently no items in your shopping cart.</p>
             <a href="categoryPage.html" class="continue-shopping-btn">Continue Shopping</a>
         </div>
         
-        <!-- Bag with Items -->
         <div class="bag-content-container" id="bag-content">
             <div class="bag-items" id="bag-items-list">
-                <!-- Items will be injected here by JavaScript -->
                 <button class="empty-cart-btn" id="empty-cart">Empty Cart</button>
             </div>
             <div class="bag-summary">
@@ -327,15 +63,15 @@
         </div>
     </main>
 
-    <!-- Footer --><footer class="footer">
+   <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
                 <h3>Brands</h3>
                 <ul>
-                    <li>Rick Owens</li>
-                    <li>Maison Margiela</li>
-                    <li>Balenciaga</li>
-                    <li>Vivienne Westwood</li>
+                    <li><a href="brandPage.html?brand=Rick%20Owens">Rick Owens</a></li>
+                    <li><a href="brandPage.html?brand=Maison%20Margiela">Maison Margiela</a></li>
+                    <li><a href="brandPage.html?brand=Balenciaga">Balenciaga</a></li>
+                    <li><a href="brandPage.html?brand=Vivienne%20Westwood">Vivienne Westwood</a></li>
                     <li><a href="brandsPage.html">Other Brands</a></li>
                 </ul>
             </div>
@@ -351,13 +87,12 @@
         </div>
     </footer>
 
-    <!-- Bag Logic --><script src="products.js"></script>
+    <script src="products.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cartKey = 'fs_cart';
             const allProducts = window.PRODUCTS || [];
             
-            // --- Helper Functions ---
             function getCart() {
                 return JSON.parse(localStorage.getItem(cartKey)) || [];
             }
@@ -365,7 +100,7 @@
             function saveCart(cart) {
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartCount(cart);
-                renderBagPage(); // Re-render the page on any change
+                renderBagPage();
             }
             
             function updateCartCount(cart = null) {
@@ -386,7 +121,6 @@
                 return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
             }
 
-            // --- Main Render Function ---
             function renderBagPage() {
                 const cart = getCart();
                 const emptyBagEl = document.getElementById('bag-empty');
@@ -404,12 +138,11 @@
                 const itemsListEl = document.getElementById('bag-items-list');
                 let subtotal = 0;
                 
-                // Clear old items
                 itemsListEl.innerHTML = ''; 
                 
                 cart.forEach(item => {
                     const product = allProducts.find(p => p.id === item.id);
-                    const price = parsePrice(product?.price || item.price); // Use stored price as fallback
+                    const price = parsePrice(product?.price || item.price);
                     const itemTotal = price * item.quantity;
                     subtotal += itemTotal;
                     
@@ -435,21 +168,17 @@
                     itemsListEl.appendChild(itemEl);
                 });
                 
-                // Append Empty Cart button after all items
                 const emptyCartBtn = document.createElement('button');
                 emptyCartBtn.className = 'empty-cart-btn';
-                emptyCartBtn.id = 'empty-cart-btn'; // Unique id for listener
+                emptyCartBtn.id = 'empty-cart-btn';
                 emptyCartBtn.textContent = 'Empty Cart';
                 itemsListEl.appendChild(emptyCartBtn);
                 
-                // Update Summary
                 document.getElementById('summary-subtotal').textContent = formatPrice(subtotal);
                 document.getElementById('summary-total').textContent = formatPrice(subtotal);
             }
 
-            // --- Event Listeners ---
             function setupEventListeners() {
-                // For changing quantity or deleting
                 document.getElementById('bag-items-list').addEventListener('click', function(e) {
                     const target = e.target;
                     const uniqueId = target.dataset.id;
@@ -468,14 +197,13 @@
                         } else if (action === 'decrease') {
                             cart[itemIndex].quantity -= 1;
                             if (cart[itemIndex].quantity <= 0) {
-                                cart.splice(itemIndex, 1); // Remove if 0 or less
+                                cart.splice(itemIndex, 1);
                             }
                         }
                     }
                     saveCart(cart);
                 });
                 
-                // For Empty Cart button
                 document.getElementById('bag-items-list').addEventListener('click', function(e) {
                     if (e.target.id === 'empty-cart-btn') {
                         if (confirm('Are you sure you want to empty your cart?')) {
@@ -484,18 +212,15 @@
                     }
                 });
 
-                // For Checkout button
                 document.getElementById('checkout-btn').addEventListener('click', function() {
-                    alert('Checkout is not implemented in this demo.');
+                    window.location.href = 'paymentPage.html';
                 });
             }
 
-            // --- Initial Load ---
             updateCartCount();
             renderBagPage();
             setupEventListeners();
             
-            // Setup header user links (from accountPage.html)
             const utilityLinks = document.getElementById('header-utility-links');
             const user = JSON.parse(sessionStorage.getItem('loggedInUser'));
             if (user) {
